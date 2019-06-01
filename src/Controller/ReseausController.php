@@ -22,8 +22,17 @@ class ReseausController extends AbstractController
      */
     public function home(){
         return $this->render('reseaus/home.html.twig', [
-            'title'=> "Bienvenu les zouzou !",
+            'title'=> "Bienvenue!",
             'age' => 31
         ]);
+    }
+
+    /**
+     * @Route("/reseaus/comm/12", name="comm_show")
+     */
+
+    public function show(){
+        return $this->render('reseaus/show.html.twig');
+
     }
 }
