@@ -2,18 +2,24 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Post;
 
-class ReseausController extends AbstractController
+class ReseausController extends Controller
 {
     /**
      * @Route("/reseaus", name="reseaus")
      */
     public function index()
-    {
+    {   
+        $repo = $this->getDoctrine()->getRepository(Post::class);
+
+        $posts = $repo->findAll();
+
         return $this->render('reseaus/index.html.twig', [
             'controller_name' => 'ReseausController',
+            'posts' => $posts
         ]);
     }
 
