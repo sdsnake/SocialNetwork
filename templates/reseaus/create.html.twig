@@ -1,0 +1,18 @@
+{% extends 'base.html.twig '%}
+
+{% form_theme formPost 'bootstrap_4_layout.html.twig' %}
+
+
+{% block body %}
+<br>
+<br>
+<p></p>
+<h2>Création d'une post</h2>
+
+{{ form_start(formPost) }}
+
+        {{ form_widget(formPost) }}
+    
+{{ form_end(formPost)}}
+
+{% endblock %}

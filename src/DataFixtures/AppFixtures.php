@@ -15,7 +15,7 @@ class AppFixtures extends Fixture
             $post = new Post(); 
             $post->setTitle("Titre du Post n $i")
                    ->setContent("<p> Contenue du post n $i</p>")
-                   ->setImage("http://placehold.it/350x150")
+                   ->setImage("http://placeholder.it/350x150")
                    ->setCreatedAt(new \DateTime());
             
             $manager->persist($post);

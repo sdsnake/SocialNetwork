@@ -18,7 +18,7 @@
             <p class="card-text">
                 {{ post.content | raw}}
             </p>   
-            <a class="btn btn-primary" href={{ path('comm_show') }}>Lire la suite...</a>
+            <a class="btn btn-primary" href="{{ path('comm_show', {'id': post.id}) }}">Lire la suite...</a>
         </div>
     {% endfor %}
 
