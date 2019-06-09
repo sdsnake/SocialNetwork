@@ -11,7 +11,17 @@
 
 {{ form_start(formPost) }}
 
-        {{ form_widget(formPost) }}
+        {{ form_row(formPost.title, {'attr': {'placeholder': "Titre"}}) }}
+        {{ form_row(formPost.content, {'attr': {'placeholder': "Exprimez vous"}}) }}
+        {{ form_row(formPost.image, {'attr': {'placeholder': "adresse de l'image"}}) }}
+
+        <button type="submit" class="btn btn-success">
+                {% if editMode %}
+                        Modifier le post
+                {% else %}
+                        Ajouter le post
+                {% endif %}
+        </button>
     
 {{ form_end(formPost)}}
 

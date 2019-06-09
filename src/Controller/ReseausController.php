@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -12,7 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Post;
 use App\Repository\PostRepository; 
 
-class ReseausController extends Controller
+class ReseausController extends AbstractController
 {
     /**
      * @Route("/reseaus", name="reseaus")
@@ -42,33 +42,70 @@ class ReseausController extends Controller
     * @Route("/reseaus/new", name="reseaus_create")
     */
 
-    public function create(Request $request, ObjectManager $manager) {
+    public function create(Post $post = null, Request $request, ObjectManager $manager) {
 
-        $post = new Post();
+        
+
+            $post = new Post();
+            if(!$post->getId()){
+            $post->setCreatedAt(new \DateTime());
+            }
+
+        
+
         $form = $this->createFormBuilder($post)
-                     ->add('title', TextType::class, [
-                         'attr' => [
-                            'placeholder' => "Titre",
-                             ]
-                     ])
-                     ->add('content', TextareaType::class,  [
-                        'attr' => [
-                            'placeholder' => "contenu",
-                            ]
-                    ])
-                     ->add('image', TextType::class, [
-                         'attr' => [
-                            'placeholder' => "image de l'article",
-
-                         ]
-                     ])
-                     ->add('save', SubmitType::class, [
-                         'label'=> "enregistrer"
-                     ])
+                     ->add('title')
+                     ->add('content')
+                     ->add('image')
                      ->getForm();
         
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+           
+
+            $manager->persist($post);
+            $manager->flush();
+
+            return $this->redirectToRoute('comm_show', [ 'id' => $post->getId() ]);
+        }
+        
         return $this->render('reseaus/create.html.twig', [
-            'formPost' => $form->createView()
+            'formPost' => $form->createView(),
+            'editMode' => null
+        ]);
+
+    }
+
+    /**
+    * @Route("/reseaus/{id}/edit", name="reseaus_edit")
+    */
+
+    public function modify(Post $post, Request $request, ObjectManager $manager) {
+
+        
+
+
+        $form = $this->createFormBuilder($post)
+                     ->add('title')
+                     ->add('content')
+                     ->add('image')
+                     ->getForm();
+        
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+           
+
+            $manager->persist($post);
+            $manager->flush();
+
+            return $this->redirectToRoute('comm_show', [ 'id' => $post->getId() ]);
+        }
+        
+        return $this->render('reseaus/create.html.twig', [
+            'formPost' => $form->createView(),
+            'editMode' => $post->getId()
         ]);
 
     }
