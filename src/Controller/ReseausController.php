@@ -10,7 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Post;
-use App\Repository\PostRepository; 
+use App\Form\PostType;
+use App\Repository\PostRepository;
+
 
 class ReseausController extends AbstractController
 {
@@ -53,11 +55,7 @@ class ReseausController extends AbstractController
 
         
 
-        $form = $this->createFormBuilder($post)
-                     ->add('title')
-                     ->add('content')
-                     ->add('image')
-                     ->getForm();
+        $form = $this->createForm(PostType::class, $post);
         
         $form->handleRequest($request);
 
@@ -86,11 +84,7 @@ class ReseausController extends AbstractController
         
 
 
-        $form = $this->createFormBuilder($post)
-                     ->add('title')
-                     ->add('content')
-                     ->add('image')
-                     ->getForm();
+        $form = $this->createForm(PostType::class, $post);
         
         $form->handleRequest($request);
 
