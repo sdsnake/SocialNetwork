@@ -10,12 +10,29 @@
                 <p class="lead">Post</p>
             </div>
             <h2 class="card-title dateArt metadata">
-            <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}</em>
+            <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }} cercle {{ post.category.title }}</em>
             </h2>
         
             <p class="card-text">
                 {{ post.content | raw}}
             </p> 
         </div> 
+
+        
     </article>
+
+    <section id="commentaires">
+        {% for comment in post.comments %}
+            <div class="comment card">
+                <div class="row">
+                    <div class="col-3">
+                        {{comment.author}} (<small>{{comment.createdAt | date('d/m/Y à H:i')}}</small>)
+                    </div>
+                    <div class="col">
+                        {{ comment.content | raw}}
+                    </div>
+                </div> 
+            </div>
+        {% endfor %}
+    </section>
 {% endblock %}
