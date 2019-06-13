@@ -15,7 +15,8 @@
         
             <p class="card-text">
                 {{ post.content | raw}}
-            </p> 
+            </p>
+            {{ include('post/_delete_form.html.twig') }} 
         </div> 
 
         
@@ -33,6 +34,7 @@
                     </div>
                 </div> 
             </div>
+        
         {% endfor %}
     </section>
 {% endblock %}
