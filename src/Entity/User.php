@@ -2,11 +2,16 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
 {
@@ -25,13 +30,29 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private $roles = ['ROLE_USER'];
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $password;
+
+    /**
+    * @var string
+    */
+
+    private $plainPassword;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="UserRel")
+     */
+    private $PostRel;
+
+    public function __construct()
+    {
+        $this->PostRel = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -79,19 +100,29 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
+
     public function getPassword(): string
     {
         return (string) $this->password;
     }
 
     public function setPassword(string $password): self
-    {
+    {   
         $this->password = $password;
 
         return $this;
+    }
+
+
+    public function getPlainPassword()
+    {
+        return  $this->plainPassword;
+    }
+
+    public function setPlainPassword($plainPassword)
+    {
+        return $this->plainPassword = $plainPassword;
+
     }
 
     /**
@@ -108,6 +139,37 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPostRel(): Collection
+    {
+        return $this->PostRel;
+    }
+
+    public function addPostRel(Post $postRel): self
+    {
+        if (!$this->PostRel->contains($postRel)) {
+            $this->PostRel[] = $postRel;
+            $postRel->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostRel(Post $postRel): self
+    {
+        if ($this->PostRel->contains($postRel)) {
+            $this->PostRel->removeElement($postRel);
+            // set the owning side to null (unless already changed)
+            if ($postRel->getUserId() === $this) {
+                $postRel->setUserId(null);
+            }
+        }
+
+        return $this;
     }
 }

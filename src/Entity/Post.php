@@ -53,6 +53,12 @@ class Post
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="PostRel")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $UserRel;
+
     public function __construct()
     {   
         $this->createdAt = new \DateTime();
@@ -151,6 +157,18 @@ class Post
                 $comment->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserRel(): ?User
+    {
+        return $this->UserRel;
+    }
+
+    public function setUserRel(?User $UserRel): self
+    {
+        $this->UserRel = $UserRel;
 
         return $this;
     }
