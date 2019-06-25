@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReseausController!{% endblock %}
+
+{% block body %}
+
+    {% for post in posts %}
+        <div class="news card">
+            <img class="card-img-top" src="{{ post.image }}" alt="Card image cap">
+            <div class="container text-center">
+                <h2> {{ post.title }}</h2>
+                <p class="lead">Post</p>
+            </div>
+            <h2 class="card-title dateArt metadata">
+                <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}</em>
+            </h2>
+
+            <p class="card-text">
+                {{ post.content | raw}}
+            </p>
+            <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id}) }}">Lire la suite...</a>
+        </div>
+    {% endfor %}
+
+
+
+{% endblock %}

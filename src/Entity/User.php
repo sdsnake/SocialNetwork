@@ -45,13 +45,13 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="UserRel")
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
      */
-    private $PostRel;
+    private $UserPosts;
 
     public function __construct()
     {
-        $this->PostRel = new ArrayCollection();
+        $this->UserPosts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -145,28 +145,28 @@ class User implements UserInterface
     /**
      * @return Collection|Post[]
      */
-    public function getPostRel(): Collection
+    public function getUserPosts(): Collection
     {
-        return $this->PostRel;
+        return $this->UserPosts;
     }
 
-    public function addPostRel(Post $postRel): self
+    public function addUserPosts(Post $UserPosts): self
     {
-        if (!$this->PostRel->contains($postRel)) {
-            $this->PostRel[] = $postRel;
-            $postRel->setUserId($this);
+        if (!$this->UserPosts->contains($UserPosts)) {
+            $this->UserPosts[] = $UserPosts;
+            $UserPosts->setUserId($this);
         }
 
         return $this;
     }
 
-    public function removePostRel(Post $postRel): self
+    public function removeUserPosts(Post $UserPosts): self
     {
-        if ($this->PostRel->contains($postRel)) {
-            $this->PostRel->removeElement($postRel);
+        if ($this->UserPosts->contains($UserPosts)) {
+            $this->UserPosts->removeElement($UserPosts);
             // set the owning side to null (unless already changed)
-            if ($postRel->getUserId() === $this) {
-                $postRel->setUserId(null);
+            if ($UserPosts->getUserId() === $this) {
+                $UserPosts->setUserId(null);
             }
         }
 

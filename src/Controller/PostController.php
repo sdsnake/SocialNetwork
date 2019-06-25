@@ -9,6 +9,7 @@ use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\User;
 
 
 class PostController extends AbstractController
@@ -31,7 +32,7 @@ class PostController extends AbstractController
            
             $em->flush(); //
 
-            return $this->redirectToRoute('comm_show', [ 'id' => $post->getId() ]);
+            return $this->redirectToRoute('post_show', [ 'id' => $post->getId() ]);
         }
         
         return $this->render('reseaus/modify.html.twig', [
@@ -62,7 +63,7 @@ class PostController extends AbstractController
             $em->persist($post);
             $em->flush();
 
-            return $this->redirectToRoute('comm_show', [ 'id' => $post->getId() ]);
+            return $this->redirectToRoute('post_show', [ 'id' => $post->getId() ]);
         }
         
         return $this->render('reseaus/create.html.twig', [ /*créer une nouvelle vue modifer */
@@ -73,7 +74,7 @@ class PostController extends AbstractController
 
 
     /**
-     * @Route("/reseaus/comm/{id}", name="comm_show")
+     * @Route("/reseaus/post/{id}", name="post_show")
      */
 
     public function show(Post $post){
@@ -100,5 +101,15 @@ class PostController extends AbstractController
         return $this->redirectToRoute('reseaus');
     }
 
+    /**
+     * @Route("/{id}/user", name="show_user")
+     */
+    public function index(User $user)
+    {
+
+        return $this->render('reseaus/user.html.twig', [
+            'posts' => $user->getUserPosts()
+        ]);
+    }
    
 }

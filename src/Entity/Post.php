@@ -57,7 +57,7 @@ class Post
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="PostRel")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $UserRel;
+    private $user;
 
     public function __construct()
     {   
@@ -161,14 +161,14 @@ class Post
         return $this;
     }
 
-    public function getUserRel(): ?User
+    public function getUser(): ?user
     {
-        return $this->UserRel;
+        return $this->user;
     }
 
-    public function setUserRel(?User $UserRel): self
+    public function setUser(?user $user): self
     {
-        $this->UserRel = $UserRel;
+        $this->user = $user;
 
         return $this;
     }
