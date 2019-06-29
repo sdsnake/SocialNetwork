@@ -22,18 +22,29 @@
     </article>
 
     <section id="commentaires">
+        {{ form_start(formComment) }}
+        {{ form_row(formComment.content, {'attr': {'placeholder': "Exprimez vous"}}) }}
+
+        <button type="submit" class="btn btn-success">
+            Ajouter le commentaire
+        </button>
+        {{ form_end(formComment) }}
+
         {% for comment in post.comments %}
             <div class="comment card">
                 <div class="row">
                     <div class="col-3">
-                        {{comment.author}} (<small>{{comment.createdAt | date('d/m/Y à H:i')}}</small>)
+                        {{comment.user.email}} (<small>{{comment.createdAt | date('d/m/Y à H:i')}}</small>)
                     </div>
                     <div class="col">
                         {{ comment.content | raw}}
                     </div>
-                </div> 
+                </div>
             </div>
-        
+
         {% endfor %}
+
+
+
     </section>
 {% endblock %}

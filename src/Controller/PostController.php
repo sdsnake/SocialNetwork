@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\Comment;
+use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,8 +60,11 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-           
 
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            /** @var @ \App\entity\User $user */
+            $user = $this->getUser();
+            $post->setUser($user);
             $em->persist($post);
             $em->flush();
 
@@ -74,15 +79,36 @@ class PostController extends AbstractController
 
 
     /**
-     * @Route("/reseaus/post/{id}", name="post_show")
+     * @Route("/post/{id}", name="post_show", requirements={"id":"\d+"})
      */
 
-    public function show(Post $post){
+    public function show(Post $post, Request $request, EntityManagerInterface $em){
+        $comment= new Comment();
+        $em = $this->getDoctrine()->getManager();
+
+
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+       if($form->isSubmitted() && $form->isValid()){
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            /** @var @ \App\entity\User $user */
+            $user = $this->getUser();
+            $comment->setUser($user);
+            $comment->setAuthor('test');
+            $comment->setPost($post);
+            $em->persist($comment);
+            $em->flush();
+
+            return $this->redirectToRoute('post_show', [ 'id' => $post->getId() ]);
+       }
 
 
         return $this->render('reseaus/show.html.twig', [
             'post' => $post,
-            
+            'formComment' => $form->createView(),
+
         ]);
 
     }

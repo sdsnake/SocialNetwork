@@ -8,7 +8,7 @@
         <div class="news card">
             <img class="card-img-top" src="{{ post.image }}" alt="Card image cap">
             <div class="container text-center">
-                <a href="{{ path('show_user', {'id': post.user.id}) }}"><h3>{{ post.user.email }}</h3></a>
+                <a href="{{ path('show_user', {'id': post.user.id }) }}"><h3>{{ post.user.email }}</h3></a>
                 <h2> {{ post.title }}</h2>
                 <p class="lead">Post</p>
             </div>
@@ -19,7 +19,7 @@
             <p class="card-text">
                 {{ post.content | raw}}
             </p>   
-            <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id}) }}">Lire la suite...</a>
+            <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id }) }}">Lire la suite...</a>
         </div>
     {% endfor %}
 

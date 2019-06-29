@@ -54,7 +54,7 @@ class Post
     private $comments;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="PostRel")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="UserPosts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -87,7 +87,7 @@ class Post
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(string $content)
     {
         $this->content = $content;
 
@@ -161,12 +161,12 @@ class Post
         return $this;
     }
 
-    public function getUser(): ?user
+    public function getUser()
     {
         return $this->user;
     }
 
-    public function setUser(?user $user): self
+    public function setUser(user $user)
     {
         $this->user = $user;
 

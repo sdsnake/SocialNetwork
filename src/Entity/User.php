@@ -49,12 +49,17 @@ class User implements UserInterface
      */
     private $UserPosts;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Comment", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $comment;
+
     public function __construct()
     {
         $this->UserPosts = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
@@ -168,6 +173,23 @@ class User implements UserInterface
             if ($UserPosts->getUserId() === $this) {
                 $UserPosts->setUserId(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getComment(): ?Comment
+    {
+        return $this->comment;
+    }
+
+    public function setComment(Comment $comment): self
+    {
+        $this->comment = $comment;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $comment->getUser()) {
+            $comment->setUser($this);
         }
 
         return $this;
