@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,21 +15,19 @@ class Comment
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * * @Assert\Unique()
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $author;
-
-    /**
      * @ORM\Column(type="text")
+     * * @Assert\NotBlank()
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime")
+     * * @Assert\DateTime()
      */
     private $createdAt;
 
@@ -54,17 +53,6 @@ class Comment
         return $this->id;
     }
 
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-
-        return $this;
-    }
 
     public function getContent()
     {

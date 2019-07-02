@@ -5,21 +5,21 @@
 {% block body %}
 
     {% for post in posts %}
-        <div class="news card">
+        <div class="news card mb-4 w-50" style="margin: 0 auto">
             <img class="card-img-top" src="{{ post.image }}" alt="Card image cap">
-            <div class="container text-center">
-                <a href="{{ path('show_user', {'id': post.user.id }) }}"><h3>{{ post.user.email }}</h3></a>
-                <h2> {{ post.title }}</h2>
-                <p class="lead">Post</p>
+            <div class="text-center card-header">
+                <a href="{{ path('show_user', {'id': post.user.id }) }}"><h3 id="beautifyFont"><i class="fas fa-user-ninja"></i>  {{ post.user.alias }}</h3></a>
             </div>
-            <h2 class="card-title dateArt metadata">
-            <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}</em>
-            </h2>
-        
-            <p class="card-text">
-                {{ post.content | raw}}
-            </p>   
-            <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id }) }}">Lire la suite...</a>
+            <div class="card-body">
+                <h3 class="dateArt metadata">
+                <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}</em>
+                </h3>
+
+                <p class="card-text">
+                    {{ post.content | raw}}
+                </p>
+                <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id }) }}"><i class="far fa-comments fa-2x"></i></a>
+            </div>
         </div>
     {% endfor %}
 

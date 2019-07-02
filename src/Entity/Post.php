@@ -16,6 +16,7 @@ class Post
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * * @Assert\Unique
      */
     private $id;
 
@@ -33,17 +34,18 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Url()
+     * @Assert\Url
      */
     private $image;
 
     /**
      * @ORM\Column(type="datetime")
+     * * @Assert\DateTime
      */
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="oui")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="post")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
@@ -54,7 +56,7 @@ class Post
     private $comments;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="UserPosts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

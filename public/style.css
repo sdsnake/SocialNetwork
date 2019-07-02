@@ -335,3 +335,7 @@ h4{
  	padding : 15px; 
   	font-size : 16px;
 }
+
+#beautifyFont{
+  font-family: 'Montserrat', sans-serif;
+}

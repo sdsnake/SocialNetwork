@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"alias"}, message="There is already an account with this alias")
  */
 class User implements UserInterface
 {
@@ -19,13 +19,15 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * * @Assert\Unique()
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotNull()
      */
-    private $email;
+    private $alias;
 
     /**
      * @ORM\Column(type="json")
@@ -35,11 +37,13 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string", nullable=true)
+     * * @Assert\NotCompromisedPassword
      */
     private $password;
 
     /**
     * @var string
+     *  @Assert\NotBlank()
     */
 
     private $plainPassword;
@@ -47,16 +51,16 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
      */
-    private $UserPosts;
+    private $posts;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Comment", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", cascade={"persist", "remove"})
      */
     private $comment;
 
     public function __construct()
     {
-        $this->UserPosts = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function getId()
@@ -64,14 +68,14 @@ class User implements UserInterface
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getAlias(): ?string
     {
-        return $this->email;
+        return $this->alias;
     }
 
-    public function setEmail(string $email): self
+    public function setAlias(string $alias): self
     {
-        $this->email = $email;
+        $this->alias = $alias;
 
         return $this;
     }
@@ -83,7 +87,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->alias;
     }
 
     /**
@@ -150,28 +154,28 @@ class User implements UserInterface
     /**
      * @return Collection|Post[]
      */
-    public function getUserPosts(): Collection
+    public function getposts(): Collection
     {
-        return $this->UserPosts;
+        return $this->posts;
     }
 
-    public function addUserPosts(Post $UserPosts): self
+    public function addposts(Post $posts): self
     {
-        if (!$this->UserPosts->contains($UserPosts)) {
-            $this->UserPosts[] = $UserPosts;
-            $UserPosts->setUserId($this);
+        if (!$this->posts->contains($posts)) {
+            $this->posts[] = $posts;
+            $posts->setUserId($this);
         }
 
         return $this;
     }
 
-    public function removeUserPosts(Post $UserPosts): self
+    public function removeposts(Post $posts): self
     {
-        if ($this->UserPosts->contains($UserPosts)) {
-            $this->UserPosts->removeElement($UserPosts);
+        if ($this->posts->contains($posts)) {
+            $this->posts->removeElement($posts);
             // set the owning side to null (unless already changed)
-            if ($UserPosts->getUserId() === $this) {
-                $UserPosts->setUserId(null);
+            if ($posts->getUserId() === $this) {
+                $posts->setUserId(null);
             }
         }
 

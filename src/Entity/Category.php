@@ -31,11 +31,11 @@ class Category
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="category")
      */
-    private $oui;
+    private $post;
 
     public function __construct()
     {
-        $this->oui = new ArrayCollection();
+        $this->post = new ArrayCollection();
     }
 
     public function getId(): ?int

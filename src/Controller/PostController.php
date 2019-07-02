@@ -50,10 +50,15 @@ class PostController extends AbstractController
 
     public function create(Request $request, EntityManagerInterface $em) {
 
-        
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $post = new Post();
         $em = $this->getDoctrine()->getManager();
 
-        $post = new Post();
+
+
+        /** @var @ \App\entity\User $user */
+
+        $post->setUser($this->getUser());
         
         $form = $this->createForm(PostType::class, $post);
         
@@ -61,17 +66,15 @@ class PostController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-            /** @var @ \App\entity\User $user */
-            $user = $this->getUser();
-            $post->setUser($user);
+
+
             $em->persist($post);
             $em->flush();
 
             return $this->redirectToRoute('post_show', [ 'id' => $post->getId() ]);
         }
         
-        return $this->render('reseaus/create.html.twig', [ /*créer une nouvelle vue modifer */
+        return $this->render('reseaus/create.html.twig', [ 
             'formPost' => $form->createView(),
         ]);
 
@@ -83,21 +86,25 @@ class PostController extends AbstractController
      */
 
     public function show(Post $post, Request $request, EntityManagerInterface $em){
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $comment= new Comment();
+
         $em = $this->getDoctrine()->getManager();
 
+        /** @var @ \App\entity\User $user */
+        $comment->setUser($this->getUser());
+        $comment->setPost($post);
 
         $form = $this->createForm(CommentType::class, $comment);
 
         $form->handleRequest($request);
 
        if($form->isSubmitted() && $form->isValid()){
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-            /** @var @ \App\entity\User $user */
-            $user = $this->getUser();
-            $comment->setUser($user);
-            $comment->setAuthor('test');
-            $comment->setPost($post);
+
+
+            
+
             $em->persist($comment);
             $em->flush();
 
@@ -134,7 +141,7 @@ class PostController extends AbstractController
     {
 
         return $this->render('reseaus/user.html.twig', [
-            'posts' => $user->getUserPosts()
+            'posts' => $user->getposts()
         ]);
     }
    
