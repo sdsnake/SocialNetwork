@@ -17,8 +17,7 @@ class AppFixtures extends Fixture
         // Création de catégories fake
         for($i = 1; $i <= 3; $i++){
             $category = new Category();
-            $category->setTitle($faker->sentence())
-                     ->setDescription($faker->paragraph());
+            $category->setDescription($faker->paragraph());
         
             $manager->persist($category);
 
@@ -32,8 +31,7 @@ class AppFixtures extends Fixture
             $content = '<p>' . join($faker->paragraphs(5), '</p></p>') . '</p>';
             
 
-            $post->setTitle($faker->sentence())
-                ->setContent($content)
+            $post->setContent($content)
                 ->setImage($faker->imageUrl())
                 ->setCreatedAt($faker->dateTimeBetween('-3 months'))
                 ->setCategory($category);

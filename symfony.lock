@@ -108,9 +108,6 @@
     "egulias/email-validator": {
         "version": "2.1.8"
     },
-    "facebook/webdriver": {
-        "version": "1.6.0"
-    },
     "fig/link-util": {
         "version": "1.0.0"
     },
@@ -119,6 +116,12 @@
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "knplabs/knp-components": {
+        "version": "v2.0.1"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v4.0.0"
     },
     "monolog/monolog": {
         "version": "1.24.0"
@@ -327,9 +330,6 @@
     },
     "symfony/orm-pack": {
         "version": "v1.0.6"
-    },
-    "symfony/panther": {
-        "version": "v0.3.0"
     },
     "symfony/phpunit-bridge": {
         "version": "4.3",

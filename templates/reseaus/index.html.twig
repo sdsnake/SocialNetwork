@@ -5,24 +5,32 @@
 {% block body %}
 
     {% for post in posts %}
-        <div class="news card mb-4 w-50" style="margin: 0 auto">
+        <div class="news card mb-4 mt-5 col-lg-7 col-md-12" style="margin: 0 auto">
             <img class="card-img-top" src="{{ post.image }}" alt="Card image cap">
             <div class="text-center card-header">
-                <a href="{{ path('show_user', {'id': post.user.id }) }}"><h3 id="beautifyFont"><i class="fas fa-user-ninja"></i>  {{ post.user.alias }}</h3></a>
+                <a href="{{ path('show_user', {'id': post.user.id }) }}"><h3 id="beautifyFont"><i
+                                class="fas fa-user-ninja"></i> {{ post.user.alias }}</h3></a>
             </div>
             <div class="card-body">
                 <h3 class="dateArt metadata">
-                <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}</em>
+                    <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}</em>
                 </h3>
 
                 <p class="card-text">
-                    {{ post.content | raw}}
+                    {{ post.content | raw }}
                 </p>
-                <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id }) }}"><i class="far fa-comments fa-2x"></i></a>
+                <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id }) }}"><i
+                            class="far fa-comments fa-2x"></i></a>
             </div>
         </div>
+
     {% endfor %}
 
-    
-    
+    <div class="row">
+        <div class="col-sm-12">
+            {{ knp_pagination_render(posts) }}
+        </div>
+    </div>
+
+
 {% endblock %}

@@ -19,12 +19,7 @@ class Post
      * * @Assert\Unique
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=10, max=20, minMessage="Titre trop court")
-     */
-    private $title;
+    
 
     /**
      * @ORM\Column(type="text")
@@ -72,17 +67,7 @@ class Post
         return $this->id;
     }
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
 
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
 
     public function getContent(): ?string
     {

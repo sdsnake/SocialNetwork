@@ -22,32 +22,33 @@ class RegistrationController extends AbstractController
      * @param LoginFormAuthenticator $authenticator
      * @return Response
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    public function register(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        GuardAuthenticatorHandler $guardHandler,
+        LoginFormAuthenticator $authenticator
+    ): Response
     {
         $user = new User();
 
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+        $form = $this->createForm(RegistrationFormType::class, $user)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
 
-                    $passwordEncoder->encodePassword(
-                        $user,
-                        $user->getPlainPassword()
-                    )
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $user->getPlainPassword()
+                )
 
-                    );
+            );
 
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $this->getDoctrine()->getManager()->persist($user);
+            $this->getDoctrine()->getManager()->flush();
 
-            // do anything else you need here, like send an email
-            $this->redirectToRoute('home');
-           return $guardHandler->authenticateUserAndHandleSuccess(
+            return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
                 $authenticator,

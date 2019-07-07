@@ -1,22 +1,22 @@
-{% extends 'base.html.twig '%}
+{% extends 'base.html.twig ' %}
 
 {% form_theme formPost 'bootstrap_4_layout.html.twig' %}
 
 
 {% block body %}
-<br>
-<br>
-<p></p>
-<h2>Création d'une post</h2>
+    <br>
+    <br>
+    <p></p>
+    <h2>Création d'une post</h2>
 
-{{ form_start(formPost) }}
+    {{ form_start(formPost) }}
 
-        {% include "reseaus/form.html.twig" %}
+    {% include "reseaus/form.html.twig" %}
 
-        <button type="submit" class="btn btn-success">
-                       Modifier le Post
-        </button>
-    
-{{ form_end(formPost)}}
+    <button type="submit" class="btn btn-success">
+        Modifier le Post
+    </button>
+
+    {{ form_end(formPost) }}
 
 {% endblock %}

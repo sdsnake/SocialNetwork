@@ -7,7 +7,8 @@
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.alias) }}
-        {{ form_row(registrationForm.plainPassword) }}
+        {{ form_row(registrationForm.plainPassword.first) }}
+        {{ form_row(registrationForm.plainPassword.second) }}
 
         <button class="btn">Register</button>
     {{ form_end(registrationForm) }}

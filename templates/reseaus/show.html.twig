@@ -2,23 +2,23 @@
 
 
 {% block body %}
- <article>
+    <article class="mt-5">
         <div class="news card">
-            <img class="card-img-top" src="{{ post.image}}" alt="Card image cap">
+            <img class="card-img-top" src="{{ post.image }}" alt="Card image cap">
             <div class="container text-center">
-                <h2> {{ post.title }}</h2>
                 <p class="lead">Post</p>
             </div>
             <h2 class="card-title dateArt metadata">
-            <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }} cercle {{ post.category.title }}</em>
+                <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}
+                    cercle {{ post.category.title }}</em>
             </h2>
-        
-            <p class="card-text">
-                {{ post.content | raw}}
-            </p>
-        </div> 
 
-        
+            <p class="card-text">
+                {{ post.content | raw }}
+            </p>
+        </div>
+
+
     </article>
 
     <section id="commentaires">
@@ -34,16 +34,17 @@
             <div class="comment card">
                 <div class="row">
                     <div class="col-3">
-                        {{comment.user.email}} (<small>{{comment.createdAt | date('d/m/Y à H:i')}}</small>)
+                        {{ comment.user.alias }} (
+                        <small>{{ comment.createdAt | date('d/m/Y à H:i') }}</small>
+                        )
                     </div>
                     <div class="col">
-                        {{ comment.content | raw}}
+                        {{ comment.content | raw }}
                     </div>
                 </div>
             </div>
 
         {% endfor %}
-
 
 
     </section>

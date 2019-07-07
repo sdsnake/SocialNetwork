@@ -25,7 +25,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $alias;
 
@@ -37,13 +37,14 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string", nullable=true)
-     * * @Assert\NotCompromisedPassword
      */
     private $password;
 
     /**
     * @var string
      *  @Assert\NotBlank()
+     * @Assert\Length(min="4")
+     * @Assert\NotCompromisedPassword
     */
 
     private $plainPassword;
@@ -56,11 +57,12 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", cascade={"persist", "remove"})
      */
-    private $comment;
+    private $comments;
 
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId()
@@ -154,48 +156,19 @@ class User implements UserInterface
     /**
      * @return Collection|Post[]
      */
-    public function getposts(): Collection
+    public function getPosts(): Collection
     {
         return $this->posts;
     }
 
-    public function addposts(Post $posts): self
-    {
-        if (!$this->posts->contains($posts)) {
-            $this->posts[] = $posts;
-            $posts->setUserId($this);
-        }
+    /**
+     * @return Collection|Comment[]
+     */
 
-        return $this;
+    public function getComments(): Collection
+    {
+        return $this->comments;
     }
 
-    public function removeposts(Post $posts): self
-    {
-        if ($this->posts->contains($posts)) {
-            $this->posts->removeElement($posts);
-            // set the owning side to null (unless already changed)
-            if ($posts->getUserId() === $this) {
-                $posts->setUserId(null);
-            }
-        }
 
-        return $this;
-    }
-
-    public function getComment(): ?Comment
-    {
-        return $this->comment;
-    }
-
-    public function setComment(Comment $comment): self
-    {
-        $this->comment = $comment;
-
-        // set the owning side of the relation if necessary
-        if ($this !== $comment->getUser()) {
-            $comment->setUser($this);
-        }
-
-        return $this;
-    }
 }
