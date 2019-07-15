@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +28,8 @@ class HomeController extends AbstractController
             6
         );
 
+
+
         return $this->render('reseaus/index.html.twig', [
             'controller_name' => 'ReseausController',
             'posts' => $posts
@@ -39,8 +42,7 @@ class HomeController extends AbstractController
     public function home()
     {
         return $this->render('reseaus/home.html.twig', [
-            'title' => "Bienvenue!",
-            'age' => 31
+            'title' => "Bienvenue!"
         ]);
     }
 

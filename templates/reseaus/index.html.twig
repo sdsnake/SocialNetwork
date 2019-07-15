@@ -5,8 +5,8 @@
 {% block body %}
 
     {% for post in posts %}
-        <div class="news card mb-4 mt-5 col-lg-7 col-md-12" style="margin: 0 auto">
-            <img class="card-img-top" src="{{ post.image }}" alt="Card image cap">
+        <div class="news card mb-4 mt-5 col-lg-7 col-md-12">
+            <img class="card-img-top" src="{{ '/files/' ~ post.imgFileName }}" alt="Card image cap">
             <div class="text-center card-header">
                 <a href="{{ path('show_user', {'id': post.user.id }) }}"><h3 id="beautifyFont"><i
                                 class="fas fa-user-ninja"></i> {{ post.user.alias }}</h3></a>
@@ -19,9 +19,11 @@
                 <p class="card-text">
                     {{ post.content | raw }}
                 </p>
-                <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id }) }}"><i
+                <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id, 'usId': post.user.id }) }}"><i
                             class="far fa-comments fa-2x"></i></a>
             </div>
+            <a href="{{ path('edit_post', {'id': post.id }) }}">modifier</a>
+
         </div>
 
     {% endfor %}

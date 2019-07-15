@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class PostType extends AbstractType
 {
@@ -23,6 +24,13 @@ class PostType extends AbstractType
                 'attr' => ['class' => 'mytextarea'],
             ])
             ->add('image')
+            ->add('img', FileType::class, [
+            'label' => 'Ajoutez une image',
+
+            // unmapped means that this field is not associated to any entity property
+            'mapped' => false,
+            'required' => false,
+            ])
         ;
     }
 

@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Post;
 use App\Form\PostType;
-use App\Repository\PostRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
+use App\Service\FileUploader;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 class PostController extends AbstractController
@@ -22,12 +22,15 @@ class PostController extends AbstractController
      * @Route("/{id}/edit", name="edit_post", requirements={"id":"\d+"})
      */
 
-    public function editPost(Post $post, Request $request)
+    public function editPost(Post $post, Request $request, FileUploader $fileUploader)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $form = $this->createForm(PostType::class, $post)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $post->setImgFilename($fileUploader->upload($form['img']->getData()));
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -45,7 +48,7 @@ class PostController extends AbstractController
      * @Route("/new", name="reseaus_create")
      */
 
-    public function create(Request $request)
+    public function create(Request $request, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -56,6 +59,9 @@ class PostController extends AbstractController
         $form = $this->createForm(PostType::class, $post)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $post->setImgFilename($fileUploader->upload($form['img']->getData()));
 
 
             $this->getDoctrine()->getManager()->persist($post);
@@ -96,8 +102,7 @@ class PostController extends AbstractController
 
         return $this->render('reseaus/show.html.twig', [
             'post' => $post,
-            'formComment' => $form->createView(),
-
+            'formComment' => $form->createView()
         ]);
 
     }

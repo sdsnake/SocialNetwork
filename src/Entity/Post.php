@@ -16,7 +16,6 @@ class Post
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * * @Assert\Unique
      */
     private $id;
     
@@ -55,6 +54,11 @@ class Post
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $imgFilename;
 
     public function __construct()
     {   
@@ -156,6 +160,20 @@ class Post
     public function setUser(user $user)
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+
+
+    public function getImgFilename()
+    {
+        return $this->imgFilename;
+    }
+
+    public function setImgFilename($imgFilename)
+    {
+        $this->imgFilename = $imgFilename;
 
         return $this;
     }
