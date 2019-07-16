@@ -30,3 +30,8 @@ services:
     App\Service\FileUploader:
         arguments:
             $targetDirectory: '%kernel.project_dir%/public/files'
+    security.access.post_voter:
+        class:      App\Security\Voter\PostVoter
+        public:     false
+        tags:
+            - { name: security.voter }

@@ -23,7 +23,6 @@ class PostType extends AbstractType
             ->add('content', TextareaType::class, [
                 'attr' => ['class' => 'mytextarea'],
             ])
-            ->add('image')
             ->add('img', FileType::class, [
             'label' => 'Ajoutez une image',
 
@@ -37,7 +36,7 @@ class PostType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            //'data_class' => Post::class,
+            'data_class' => Post::class,
         ]);
     }
 }

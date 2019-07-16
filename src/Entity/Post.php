@@ -26,11 +26,6 @@ class Post
      */
     private $content;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Url
-     */
-    private $image;
 
     /**
      * @ORM\Column(type="datetime")
@@ -56,7 +51,8 @@ class Post
     private $user;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
+     *
      */
     private $imgFilename;
 
@@ -85,17 +81,6 @@ class Post
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {

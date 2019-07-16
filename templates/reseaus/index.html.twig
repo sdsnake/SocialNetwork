@@ -9,7 +9,7 @@
             <img class="card-img-top" src="{{ '/files/' ~ post.imgFileName }}" alt="Card image cap">
             <div class="text-center card-header">
                 <a href="{{ path('show_user', {'id': post.user.id }) }}"><h3 id="beautifyFont"><i
-                                class="fas fa-user-ninja"></i> {{ post.user.alias }}</h3></a>
+                                class="fas fa-user-tie"></i> {{ post.user.alias }}</h3></a>
             </div>
             <div class="card-body">
                 <h3 class="dateArt metadata">
@@ -19,11 +19,20 @@
                 <p class="card-text">
                     {{ post.content | raw }}
                 </p>
+                {% if is_granted('ROLE_USER') %}
                 <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id, 'usId': post.user.id }) }}"><i
                             class="far fa-comments fa-2x"></i></a>
+                {% else %}
+                    <div class="badge badge-info">Connectez pour participer à la discussion </div></br>
+                    <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id, 'usId': post.user.id }) }}"><i
+                                class="far fa-comments fa-2x"></i></a>
+                {% endif %}
             </div>
-            <a href="{{ path('edit_post', {'id': post.id }) }}">modifier</a>
+            {% if is_granted('edit',post) %}
+                <a class="btn text-primary text-right" href="{{ path('edit_post', {'id': post.id }) }}">Modifier</a>
+                {%  include "reseaus/delete_form.html.twig" %}
 
+            {% endif %}
         </div>
 
     {% endfor %}

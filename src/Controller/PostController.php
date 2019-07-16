@@ -12,7 +12,6 @@ use App\Entity\Post;
 use App\Form\PostType;
 use App\Entity\User;
 use App\Service\FileUploader;
-use Symfony\Component\HttpFoundation\File\File;
 
 
 class PostController extends AbstractController
@@ -24,13 +23,18 @@ class PostController extends AbstractController
 
     public function editPost(Post $post, Request $request, FileUploader $fileUploader)
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
 
         $form = $this->createForm(PostType::class, $post)->handleRequest($request);
+        $this->denyAccessUnlessGranted('edit', $post);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $post->setImgFilename($fileUploader->upload($form['img']->getData()));
+            $imgFile = $form['img']->getData();
+
+            if($imgFile) {
+                $post->setImgFilename($fileUploader->upload($imgFile));
+            }
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -60,9 +64,13 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $imgFile = $form['img']->getData();
 
-            $post->setImgFilename($fileUploader->upload($form['img']->getData()));
-
+            if($imgFile) {
+                $post->setImgFilename($fileUploader->upload($imgFile));
+            }else{
+                $post->setImgFilename('nothing.png');
+            }
 
             $this->getDoctrine()->getManager()->persist($post);
             $this->getDoctrine()->getManager()->flush();
@@ -108,11 +116,11 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/del", name="post_delete", methods={"DELETE"})
+     * @Route("/{id}/del", name="post_delete")
      */
     public function delete(Request $request, Post $post): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('delete', $post);
         if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))) {
             $this->getDoctrine()->getManager()->remove($post);
             $this->getDoctrine()->getManager()->flush();

@@ -31,12 +31,12 @@
         {{ form_end(formComment) }}
 
         {% for comment in post.comments %}
-            <div class="comment card">
+            <div class="comment card w-50">
                 <div class="row">
                     <div class="col-3">
-                        {{ comment.user.alias }} (
+                        {{ comment.user.alias }}
                         <small>{{ comment.createdAt | date('d/m/Y à H:i') }}</small>
-                        )
+
                     </div>
                     <div class="col">
                         {{ comment.content | raw }}
