@@ -32,7 +32,6 @@ class AppFixtures extends Fixture
             
 
             $post->setContent($content)
-                ->setImage($faker->imageUrl())
                 ->setCreatedAt($faker->dateTimeBetween('-3 months'))
                 ->setCategory($category);
 

@@ -59,10 +59,16 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="love")
+     */
+    private $loves;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->loves = new ArrayCollection();
     }
 
     public function getId()
@@ -168,6 +174,38 @@ class User implements UserInterface
     public function getComments(): Collection
     {
         return $this->comments;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getLoves(): Collection
+    {
+        return $this->loves;
+    }
+
+    public function addLove(Post $love): self
+    {
+        if (!$this->loves->contains($love)) {
+            $this->loves[] = $love;
+            $love->addLove($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLove(Post $love): self
+    {
+        if ($this->loves->contains($love)) {
+            $this->loves->removeElement($love);
+            $love->removeLove($this);
+        }
+
+        return $this;
+    }
+
+    public function __toString(){
+        return $this->loves;
     }
 
 

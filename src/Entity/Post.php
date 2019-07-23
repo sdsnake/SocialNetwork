@@ -18,7 +18,7 @@ class Post
      * @ORM\Column(type="integer")
      */
     private $id;
-    
+
 
     /**
      * @ORM\Column(type="text")
@@ -40,7 +40,7 @@ class Post
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
      */
     private $comments;
 
@@ -56,17 +56,22 @@ class Post
      */
     private $imgFilename;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="loves")
+     */
+    private $loves;
+
     public function __construct()
-    {   
+    {
         $this->createdAt = new \DateTime();
         $this->comments = new ArrayCollection();
+        $this->loves = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
 
 
     public function getContent(): ?string
@@ -150,7 +155,6 @@ class Post
     }
 
 
-
     public function getImgFilename()
     {
         return $this->imgFilename;
@@ -162,4 +166,41 @@ class Post
 
         return $this;
     }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getLoves(): Collection
+    {
+        return $this->loves;
+    }
+
+    public function addLove(User $love): self
+    {
+        if (!$this->loves->contains($love)) {
+            $this->loves[] = $love;
+        }
+
+        return $this;
+    }
+
+    public function removeLove(User $love): self
+    {
+        if ($this->loves->contains($love)) {
+            $this->loves->removeElement($love);
+
+        }
+
+        return $this;
+    }
+
+    public function loved(User $love): bool
+    {
+        foreach ($this->loves as $love) {
+            if ($this->getUser() === $love) return true;
+        }
+
+        return false;
+    }
+
 }

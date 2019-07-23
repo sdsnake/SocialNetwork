@@ -30,9 +30,11 @@ class HomeController extends AbstractController
 
 
 
+
         return $this->render('reseaus/index.html.twig', [
             'controller_name' => 'ReseausController',
-            'posts' => $posts
+            'posts' => $posts,
+
         ]);
     }
 

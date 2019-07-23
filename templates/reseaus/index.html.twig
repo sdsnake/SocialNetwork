@@ -16,11 +16,20 @@
                     <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}</em>
                 </h3>
 
+
+                <a href="{{ path('like', {'id' : post.id} )}}" class="btn btn-link">
+
+                    <i class="far fa-heart fa-2x text-danger"></i>
+                    <span class="js-likes">{{ post.loves | length}}</span>
+                    <span class = "js-label">J'aime</span>
+                </a>
+
+
                 <p class="card-text">
                     {{ post.content | raw }}
                 </p>
                 {% if is_granted('ROLE_USER') %}
-                <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id, 'usId': post.user.id }) }}"><i
+                <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id }) }}"><i
                             class="far fa-comments fa-2x"></i></a>
                 {% else %}
                     <div class="badge badge-info">Connectez pour participer à la discussion </div></br>
@@ -45,3 +54,5 @@
 
 
 {% endblock %}
+
+

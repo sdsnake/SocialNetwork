@@ -32,7 +32,7 @@ class PostController extends AbstractController
 
             $imgFile = $form['img']->getData();
 
-            if($imgFile) {
+            if ($imgFile) {
                 $post->setImgFilename($fileUploader->upload($imgFile));
             }
 
@@ -66,9 +66,9 @@ class PostController extends AbstractController
 
             $imgFile = $form['img']->getData();
 
-            if($imgFile) {
+            if ($imgFile) {
                 $post->setImgFilename($fileUploader->upload($imgFile));
-            }else{
+            } else {
                 $post->setImgFilename('nothing.png');
             }
 
@@ -137,6 +137,46 @@ class PostController extends AbstractController
         return $this->render('reseaus/user.html.twig', [
             'posts' => $user->getposts()
         ]);
+    }
+
+    /**
+     * @Route("/like/{id}", name="like")
+     */
+
+    public function like(Post $post)
+    {
+
+
+        if ($post->loved($this->getUser())) {
+
+
+            $this->getDoctrine()->getManager()->persist($post->removeLove($this->getUser()));
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->json(
+                [
+                    'code'=> 200,
+                    'likes' => count($post->getLoves())
+
+                ],200
+            );
+
+        } else {
+            $this->getDoctrine()->getManager()->persist($post->addLove($this->getUser()));
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->json(
+                [
+                    'code'=> 200,
+                    'likes' => count($post->getLoves())
+                ],200
+            );
+
+        }
+
+
+        //return $this->redirectToRoute('reseaus');
+
     }
 
 }
