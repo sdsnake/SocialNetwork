@@ -155,10 +155,10 @@ class PostController extends AbstractController
 
             return $this->json(
                 [
-                    'code'=> 200,
+                    'code' => 200,
                     'likes' => count($post->getLoves())
 
-                ],200
+                ], 200
             );
 
         } else {
@@ -167,9 +167,9 @@ class PostController extends AbstractController
 
             return $this->json(
                 [
-                    'code'=> 200,
+                    'code' => 200,
                     'likes' => count($post->getLoves())
-                ],200
+                ], 200
             );
 
         }

@@ -57,10 +57,7 @@ class PostVoter extends Voter
 
     private function canView(Post $post, User $user)
     {
-        // if they can edit, they can view
-        if ($this->canEdit($post, $user)) {
-            return true;
-        }
+        $this->canEdit($post, $user);
 
     }
 

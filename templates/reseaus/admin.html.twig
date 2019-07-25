@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReseausController!{% endblock %}
+
+{% block body %}
+    <div class="mt-5">
+        {% for user in users %}
+
+            <div class="card">
+                <div class="card-title"></div>
+                <div class="card-body">
+                    {{ user.alias }}
+
+                </div>
+                {% if user.active == true %}
+                    Etat :
+                    <a href="{{ path('restraint', {'id' : user.id} ) }}">actif</a>
+                {% else %}
+                    Etat :
+                    <a href="{{ path('restraint', {'id' : user.id} ) }}">Inactif</a>
+                {% endif %}
+            </div>
+
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

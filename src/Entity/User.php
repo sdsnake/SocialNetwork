@@ -41,11 +41,11 @@ class User implements UserInterface
     private $password;
 
     /**
-    * @var string
-     *  @Assert\NotBlank()
+     * @var string
+     * @Assert\NotBlank()
      * @Assert\Length(min="4")
      * @Assert\NotCompromisedPassword
-    */
+     */
 
     private $plainPassword;
 
@@ -64,11 +64,18 @@ class User implements UserInterface
      */
     private $loves;
 
+    /**
+     * @ORM\Column(name="active", type="boolean")
+     */
+
+    private $active;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->loves = new ArrayCollection();
+        $this->active = true;
     }
 
     public function getId()
@@ -95,7 +102,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->alias;
+        return (string)$this->alias;
     }
 
     /**
@@ -120,11 +127,11 @@ class User implements UserInterface
 
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
-    {   
+    {
         $this->password = $password;
 
         return $this;
@@ -133,7 +140,7 @@ class User implements UserInterface
 
     public function getPlainPassword()
     {
-        return  $this->plainPassword;
+        return $this->plainPassword;
     }
 
     public function setPlainPassword($plainPassword)
@@ -204,7 +211,19 @@ class User implements UserInterface
         return $this;
     }
 
-    public function __toString(){
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    public function setActive($active)
+    {
+        return $this->active = $active;
+    }
+
+
+    public function __toString()
+    {
         return $this->loves;
     }
 
