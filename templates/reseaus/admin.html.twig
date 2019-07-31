@@ -9,15 +9,19 @@
             <div class="card">
                 <div class="card-title"></div>
                 <div class="card-body">
-                    {{ user.alias }}
+                    <div class="text-center">{{ user.alias }}</div>
 
                 </div>
                 {% if user.active == true %}
+                    <div class="text-center">
                     Etat :
-                    <a href="{{ path('restraint', {'id' : user.id} ) }}">actif</a>
+                    <a href="{{ path('restraint', {'id' : user.id} ) }}" class="text-center badge badge-success">actif</a>
+                    </div>
                 {% else %}
+                    <div class="text-center">
                     Etat :
-                    <a href="{{ path('restraint', {'id' : user.id} ) }}">Inactif</a>
+                    <a href="{{ path('restraint', {'id' : user.id} ) }}" class="text-center badge badge-danger">Inactif</a>
+                    </div>
                 {% endif %}
             </div>
 

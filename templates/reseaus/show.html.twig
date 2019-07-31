@@ -10,9 +10,11 @@
             </div>
             <h2 class="card-title dateArt metadata">
                 <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}
-                    cercle {{ post.category.title }}</em>
+                    cercle <strong class="badge badge-pill badge-primary">{{ post.category.title }}</strong></em>
             </h2>
-
+            {%  for tag in post.tags %}
+                <p class="badge badge-primary w-25">#{{ tag }}</p><br>
+                {% endfor %}
             <p class="card-text">
                 {{ post.content | raw }}
             </p>
@@ -25,16 +27,16 @@
         {{ form_start(formComment) }}
         {{ form_row(formComment.content, {'attr': {'placeholder': "Exprimez vous"}}) }}
 
-        <button type="submit" class="btn btn-success">
+        <button type="submit" class="btn btn-success mb-5">
             Ajouter le commentaire
         </button>
         {{ form_end(formComment) }}
 
         {% for comment in post.comments %}
-            <div class="comment card w-50">
+            <div class="comment w-50 border rounded bg-info text-white">
                 <div class="row">
                     <div class="col-3">
-                        {{ comment.user.alias }}
+                        <span class="badge-light text-black" >{{ comment.user.alias }}</span>
                         <small>{{ comment.createdAt | date('d/m/Y à H:i') }}</small>
 
                     </div>

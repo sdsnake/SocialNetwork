@@ -147,7 +147,7 @@ class PostController extends AbstractController
     {
 
 
-        if ($post->loved($this->getUser())) {
+        if ($post->getLoves()->contains($this->getUser())) {
 
 
             $this->getDoctrine()->getManager()->persist($post->removeLove($this->getUser()));

@@ -60,7 +60,7 @@ class User implements UserInterface
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="love")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="loves")
      */
     private $loves;
 

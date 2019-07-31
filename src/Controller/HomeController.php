@@ -25,7 +25,7 @@ class HomeController extends AbstractController
 
         $posts = $paginator->paginate($repo->findAll(),
             $request->query->getInt('page', 1),
-            6
+            5
         );
 
 

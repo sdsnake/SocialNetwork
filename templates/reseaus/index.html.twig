@@ -15,8 +15,9 @@
                 <h3 class="dateArt metadata">
                     <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}</em>
                 </h3>
-
-
+                {%  for tag in post.tags %}
+                <p class="badge badge-primary ">#{{ tag }}</p><br>
+                {% endfor %}
                 <a href="{{ path('like', {'id' : post.id} )}}" class="btn btn-link">
 
                     <i class="far fa-heart fa-2x text-danger"></i>
