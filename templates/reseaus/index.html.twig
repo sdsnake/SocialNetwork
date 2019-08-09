@@ -5,16 +5,16 @@
 {% block body %}
 
     {% for post in posts %}
-        <div class="news card mb-4 mt-5 col-lg-7 col-md-12">
+        <div class="news card mb-4 mt-5 col-lg-7 col-sm-12">
             <img class="card-img-top" src="{{ '/files/' ~ post.imgFileName }}" alt="Card image cap">
             <div class="text-center card-header">
-                <a href="{{ path('show_user', {'id': post.user.id }) }}"><h3 id="beautifyFont"><i
-                                class="fas fa-user-tie"></i> {{ post.user.alias }}</h3></a>
+                <a href="{{ path('show_user', {'id': post.user.id }) }}"><h3 class="user text-primary"><i
+                                class="fas fa-user-tie user"></i> {{ post.user.alias }}</h3></a>
             </div>
             <div class="card-body">
-                <h3 class="dateArt metadata">
+                <h5 class="dateArt metadata">
                     <em>le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}</em>
-                </h3>
+                </h5>
                 {%  for tag in post.tags %}
                 <p class="badge badge-primary ">#{{ tag }}</p><br>
                 {% endfor %}
@@ -33,7 +33,7 @@
                 <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id }) }}"><i
                             class="far fa-comments fa-2x"></i></a>
                 {% else %}
-                    <div class="badge badge-info">Connectez pour participer à la discussion </div></br>
+                    <div class="badge badge-info mb-4">Connectez pour participer à la discussion </div></br>
                     <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id, 'usId': post.user.id }) }}"><i
                                 class="far fa-comments fa-2x"></i></a>
                 {% endif %}

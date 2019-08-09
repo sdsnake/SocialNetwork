@@ -4,20 +4,42 @@
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
         <link href="{{ asset('style.css') }}" rel="stylesheet" type="text/css" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" rel="stylesheet" type="text/css" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-typeahead.css" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Righteous&display=swap" rel="stylesheet">
 
     {% endblock %}
     <style>
+
         .bootstrap-tagsinput .tag{
             background-color: #007bff;
             padding: 3px;
             border-radius: 3px;
         }
+
+        .user{
+            font-family: 'Righteous', cursive;
+        }
+
+        .comment{
+            font-family: 'Fredoka One', cursive;
+        }
+
+        @media (max-width: 640px) {
+            .rowform{
+                margin: auto;
+            }
+
+            .news {
+                width: 100%;
+            }
+        }
+
+
     </style>
 </head>
 <body>
@@ -63,7 +85,7 @@
         </div>
     </div>
 </nav>
-<div class="container bg-light">
+<div class="bg-light col-sm-12">
     {% block body %}{% endblock %}
 </div>
 {% block javascripts %}

@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Register</h1>
-
+    <div class="mt-5">
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.alias) }}
         {{ form_row(registrationForm.plainPassword.first) }}
@@ -12,4 +12,5 @@
 
         <button class="btn bg-success text-white">Register</button>
     {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

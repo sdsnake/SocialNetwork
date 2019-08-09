@@ -33,14 +33,14 @@
         {{ form_end(formComment) }}
 
         {% for comment in post.comments %}
-            <div class="comment w-50 border rounded bg-info text-white">
+            <div class="comment w-50 border rounded">
                 <div class="row">
                     <div class="col-3">
-                        <span class="badge-light text-black" >{{ comment.user.alias }}</span>
+                        <span class="badge-light text-black" ><i class="fas fa-user-secret"></i> {{ comment.user.alias }}</span>
                         <small>{{ comment.createdAt | date('d/m/Y à H:i') }}</small>
 
                     </div>
-                    <div class="col">
+                    <div class="col comment">
                         {{ comment.content | raw }}
                     </div>
                 </div>
