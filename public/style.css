@@ -1,4 +1,14 @@
-h1, h3 ,.dateArt
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+h1, h3
 {
     text-align:center;
 }
@@ -7,10 +17,9 @@ h1{
 	text-shadow: 0px 0px 9px black;  
 }
 
-.inputEmail {
-  padding:.75rem;
+.fa-heart:hover{
+  transform: scale(1.5);
 }
-
 .news
 {
     width:70%;
@@ -31,7 +40,6 @@ a
 
 header {
     padding: 156px 0 100px;
-    background-image: url('../images/alaska.jpg');
     background-size: 100%;
     margin-bottom: 100px;
 }
@@ -136,175 +144,6 @@ header {
   margin-top: 100px;
 }
 
-#addart{
-  margin: 15px;
-}
-
-.pPost{
-
-  width: 150px;
-  margin-left: 2%;
-  border-radius: 10px;
-  padding: 10px;
-}
-
-.headerPost {
-    padding: 156px 0 ;
-    background-image: url('../images/article.jpg');
-    background-size: cover;
-    margin-bottom: 5px;
-}
-
-#signConfMess{
-
-  position: absolute;
-  top: 200px;
-  right: 42%;
-  z-index: 55;
-  color: white;
-  padding: 20px;
-  border-radius: 5px;
-  display: none;
-}
-
-    
-/* The Modal (background) */
-.modaly {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-* {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-body {
-  padding: 0;
-  margin: 0;
-}
-
-#notfound {
-  position: relative;
-  height: 100vh;
-}
-
-#notfound .notfound {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-}
-
-.notfound {
-  max-width: 520px;
-  width: 100%;
-  line-height: 1.4;
-  text-align: center;
-}
-
-.notfound .notfound-404 {
-  position: relative;
-  height: 240px;
-}
-
-.notfound .notfound-404 h1 {
-  font-family: 'Montserrat', sans-serif;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  font-size: 252px;
-  font-weight: 900;
-  margin: 0px;
-  color: #262626;
-  text-transform: uppercase;
-  letter-spacing: -40px;
-  margin-left: -20px;
-}
-
-.notfound .notfound-404 h1>span {
-  text-shadow: -8px 0px 0px #fff;
-}
-
-.notfound .notfound-404 h3 {
-  font-family: 'Cabin', sans-serif;
-  position: relative;
-  font-size: 16px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #262626;
-  margin: 0px;
-  letter-spacing: 3px;
-  padding-left: 6px;
-}
-
-.notfound h2 {
-  font-family: 'Cabin', sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: #000;
-  margin-top: 0px;
-  margin-bottom: 25px;
-}
-
-@media only screen and (max-width: 767px) {
-   h1{
-  	color: white;
-   }
-  .notfound .notfound-404 {
-    height: 200px;
-  }
-  .notfound .notfound-404 h1 {
-    font-size: 200px;
-  }
-  
-  header{
-  background-size : cover;
-  }
-  
-  .lead{
-  	color: white;
-  }
-}
 
 @media only screen and (max-width: 480px) {
   .notfound .notfound-404 {

@@ -23,7 +23,7 @@ class HomeController extends AbstractController
     public function index(PostRepository $repo, Request $request, PaginatorInterface $paginator)
     {
 
-        $posts = $paginator->paginate($repo->findAll(),
+        $posts = $paginator->paginate($repo->findByAll(),
             $request->query->getInt('page', 1),
             5
         );
