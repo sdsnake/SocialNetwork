@@ -27,8 +27,7 @@ class RegistrationController extends AbstractController
         UserPasswordEncoderInterface $passwordEncoder,
         GuardAuthenticatorHandler $guardHandler,
         LoginFormAuthenticator $authenticator
-    ): Response
-    {
+    ): Response {
         $user = new User();
 
         $form = $this->createForm(RegistrationFormType::class, $user)->handleRequest($request);
@@ -36,12 +35,10 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-
                 $passwordEncoder->encodePassword(
                     $user,
                     $user->getPlainPassword()
                 )
-
             );
 
 

@@ -194,7 +194,6 @@ class Post
     {
         if ($this->loves->contains($love)) {
             $this->loves->removeElement($love);
-
         }
 
         return $this;
@@ -203,7 +202,9 @@ class Post
     public function loved(User $love): bool
     {
         foreach ($this->loves as $love) {
-            if ($this->getUser() === $love) return true;
+            if ($this->getUser() === $love) {
+                return true;
+            }
         }
 
         return false;
@@ -236,5 +237,4 @@ class Post
 
         return $this;
     }
-
 }

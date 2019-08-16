@@ -13,23 +13,17 @@ use App\Form\PostType;
 use App\Entity\User;
 use App\Service\FileUploader;
 
-
 class PostController extends AbstractController
 {
-
     /**
      * @Route("/{id}/edit", name="edit_post", requirements={"id":"\d+"})
      */
-
     public function editPost(Post $post, Request $request, FileUploader $fileUploader)
     {
-
-
         $form = $this->createForm(PostType::class, $post)->handleRequest($request);
         $this->denyAccessUnlessGranted('edit', $post);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $imgFile = $form['img']->getData();
 
             if ($imgFile) {
@@ -44,14 +38,12 @@ class PostController extends AbstractController
         return $this->render('reseaus/modify.html.twig', [
             'formPost' => $form->createView(),
         ]);
-
     }
 
 
     /**
      * @Route("/new", name="reseaus_create")
      */
-
     public function create(Request $request, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -63,7 +55,6 @@ class PostController extends AbstractController
         $form = $this->createForm(PostType::class, $post)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $imgFile = $form['img']->getData();
 
             if ($imgFile) {
@@ -81,7 +72,6 @@ class PostController extends AbstractController
         return $this->render('reseaus/create.html.twig', [
             'formPost' => $form->createView(),
         ]);
-
     }
 
 
@@ -91,7 +81,6 @@ class PostController extends AbstractController
 
     public function show(Post $post, Request $request)
     {
-
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $comment = new Comment();
         /** @var @ \App\entity\User $user */
@@ -112,7 +101,6 @@ class PostController extends AbstractController
             'post' => $post,
             'formComment' => $form->createView()
         ]);
-
     }
 
     /**
@@ -145,22 +133,19 @@ class PostController extends AbstractController
 
     public function like(Post $post)
     {
-
-
         if ($post->getLoves()->contains($this->getUser())) {
-
-
             $this->getDoctrine()->getManager()->persist($post->removeLove($this->getUser()));
             $this->getDoctrine()->getManager()->flush();
 
             return $this->json(
                 [
                     'code' => 200,
-                    'likes' => count($post->getLoves())
+                    'likes' => count($post->getLoves()),
+                    'loved' => false,
 
-                ], 200
+                ],
+                200
             );
-
         } else {
             $this->getDoctrine()->getManager()->persist($post->addLove($this->getUser()));
             $this->getDoctrine()->getManager()->flush();
@@ -168,15 +153,14 @@ class PostController extends AbstractController
             return $this->json(
                 [
                     'code' => 200,
-                    'likes' => count($post->getLoves())
-                ], 200
+                    'likes' => count($post->getLoves()),
+                    'loved' => true,
+                ],
+                200
             );
-
         }
 
 
         //return $this->redirectToRoute('reseaus');
-
     }
-
 }

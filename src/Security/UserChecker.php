@@ -14,8 +14,6 @@ class UserChecker implements UserCheckerInterface
         if (!$user instanceof AppUser) {
             return;
         }
-
-
     }
 
     public function checkPostAuth(UserInterface $user)

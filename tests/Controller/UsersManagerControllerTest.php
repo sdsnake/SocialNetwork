@@ -7,10 +7,6 @@ use Symfony\Component\HTTPFoundation\Response;
 
 class UsersManagerControllerTest extends WebTestCase
 {
-
-
-
-
     public function testShowUsers()
     {
         $client = static::createClient();
@@ -26,6 +22,4 @@ class UsersManagerControllerTest extends WebTestCase
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
-
-
 }

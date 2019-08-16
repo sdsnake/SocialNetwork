@@ -146,7 +146,6 @@ class User implements UserInterface
     public function setPlainPassword($plainPassword)
     {
         return $this->plainPassword = $plainPassword;
-
     }
 
     /**
@@ -163,7 +162,6 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-
     }
 
     /**
@@ -226,6 +224,4 @@ class User implements UserInterface
     {
         return $this->loves;
     }
-
-
 }

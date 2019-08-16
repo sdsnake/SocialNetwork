@@ -74,28 +74,28 @@ class Category
     /**
      * @return Collection|Post[]
      */
-    public function getOui(): Collection
+    public function getPost(): Collection
     {
-        return $this->oui;
+        return $this->post;
     }
 
-    public function addOui(Post $oui): self
+    public function addPost(Post $post): self
     {
-        if (!$this->oui->contains($oui)) {
-            $this->oui[] = $oui;
-            $oui->setCategory($this);
+        if (!$this->post->contains($post)) {
+            $this->post[] = $post;
+            $post->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeOui(Post $oui): self
+    public function removePost(Post $post): self
     {
-        if ($this->oui->contains($oui)) {
-            $this->oui->removeElement($oui);
+        if ($this->post->contains($post)) {
+            $this->post->removeElement($post);
             // set the owning side to null (unless already changed)
-            if ($oui->getCategory() === $this) {
-                $oui->setCategory(null);
+            if ($post->getCategory() === $this) {
+                $post->setCategory(null);
             }
         }
 

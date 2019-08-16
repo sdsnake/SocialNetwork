@@ -14,15 +14,15 @@ class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-       $builder
+        $builder
             ->add('alias')
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'Les mots de passe ne correspondent pas',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options'  => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Répeter le mot de passe'],
 
             ])
         ;
@@ -30,7 +30,6 @@ class RegistrationFormType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-
         $resolver->setDefaults([
             'data_class' => User::class,
         ]);

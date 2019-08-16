@@ -15,20 +15,16 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class HomeController extends AbstractController
 {
-
-
     /**
      * @Route("/reseaus", name="reseaus")
      */
     public function index(PostRepository $repo, Request $request, PaginatorInterface $paginator)
     {
-
-        $posts = $paginator->paginate($repo->findByAll(),
+        $posts = $paginator->paginate(
+            $repo->findByAll(),
             $request->query->getInt('page', 1),
             5
         );
-
-
 
 
         return $this->render('reseaus/index.html.twig', [
@@ -47,6 +43,4 @@ class HomeController extends AbstractController
             'title' => "Bienvenue!"
         ]);
     }
-
-
 }

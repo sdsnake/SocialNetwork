@@ -28,8 +28,7 @@ class PostRepository extends ServiceEntityRepository
 
     public function findByAll()
     {
-        return $this->findBy([],['createdAt'=>'DESC']);
-
+        return $this->findBy([], ['createdAt'=>'DESC']);
     }
 
 

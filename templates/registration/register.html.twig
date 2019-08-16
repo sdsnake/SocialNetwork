@@ -10,7 +10,9 @@
         {{ form_row(registrationForm.plainPassword.first) }}
         {{ form_row(registrationForm.plainPassword.second) }}
 
-        <button class="btn bg-success text-white">Register</button>
+        <button class="btn bg-success text-white m-2">Valider l'enregistrement</button>
     {{ form_end(registrationForm) }}
+        <p>Le mot de passe doit contenir au moins 6 caractères et un chiffre</p>
     </div>
+
 {% endblock %}

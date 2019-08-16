@@ -178,3 +178,7 @@ h4{
 #beautifyFont{
   font-family: 'Montserrat', sans-serif;
 }
+
+#showPost,.createModi{
+  margin-top: 100px;
+}

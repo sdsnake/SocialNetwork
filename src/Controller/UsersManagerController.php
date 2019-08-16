@@ -17,14 +17,11 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class UsersManagerController extends AbstractController
 {
-
-
     /**
      * @Route("/admin", name="admin")
      */
     public function index(UserRepository $repo, Request $request)
     {
-
         $users = $repo->findAll();
 
 
@@ -41,19 +38,14 @@ class UsersManagerController extends AbstractController
     public function restraint(User $user)
     {
         if ($user->getActive() == true) {
-
             $user->setActive(false);
         } else {
             $user->setActive(true);
-
         }
 
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
         return $this->redirectToRoute('admin');
-
     }
-
-
 }

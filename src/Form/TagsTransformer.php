@@ -7,10 +7,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
-
 class TagsTransformer implements DataTransformerInterface
 {
-
     private $manager;
 
     public function __construct(ObjectManager $manager)
@@ -22,7 +20,6 @@ class TagsTransformer implements DataTransformerInterface
     {
         return implode(",", $tags->map(function ($tag) {
             return $tag->getName();
-
         })->toArray());
     }
 
@@ -34,8 +31,6 @@ class TagsTransformer implements DataTransformerInterface
             ->getRepository(Tag::class);
 
         foreach (explode(',', $tags) as $tag) {
-
-
             $tagInRepo = $tagsRepository->findOneByName($tag);
 
             if ($tagInRepo !== null) {
@@ -51,5 +46,4 @@ class TagsTransformer implements DataTransformerInterface
 
         return $tagCollection;
     }
-
 }

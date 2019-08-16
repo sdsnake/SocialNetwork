@@ -1,6 +1,7 @@
 {{ form_row(formPost.category) }}
 {{ form_row(formPost.content, {'attr': {'placeholder': "Exprimez vous"}}) }}
-{{ form_row(formPost.img) }}
+{{ form_row(formPost.img,
+    {'attr': {'id':'inputGroupFile'}}) }}
 {{ form_row(formPost.tags) }}
 
 

@@ -7,10 +7,6 @@ use Symfony\Component\HTTPFoundation\Response;
 
 class HomeControllerTest extends WebTestCase
 {
-
-
-
-
     public function testHomePage()
     {
         $client = static::createClient();
@@ -26,6 +22,4 @@ class HomeControllerTest extends WebTestCase
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
-
-
 }

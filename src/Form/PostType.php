@@ -32,14 +32,15 @@ class PostType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
             ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'title'
+                'choice_label' => 'title',
+                'label' => 'Catégorie'
             ])
             ->add('content', TextareaType::class, [
                 'attr' => ['class' => 'mytextarea'],
+                'label' => 'Votre message'
             ])
             ->add('img', FileType::class, [
                 'label' => 'Ajoutez une image',
@@ -49,7 +50,10 @@ class PostType extends AbstractType
                 'required' => false,
             ]);
 
-        $builder->add('tags', TextType::class, [
+        $builder->add(
+            'tags',
+            TextType::class,
+            [
                 'attr' => ['class' => 'dynchoice'],
             ]
         );
@@ -59,7 +63,6 @@ class PostType extends AbstractType
         $builder
             ->get('tags')
             ->addModelTransformer(new TagsTransformer($this->manager));
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

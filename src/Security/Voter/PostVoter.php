@@ -58,7 +58,6 @@ class PostVoter extends Voter
     private function canView(Post $post, User $user)
     {
         $this->canEdit($post, $user);
-
     }
 
     private function canEdit(Post $post, User $user)
@@ -72,6 +71,5 @@ class PostVoter extends Voter
     {
         // if they can edit, they can view
         return $user === $post->getUser();
-
     }
 }

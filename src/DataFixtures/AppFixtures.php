@@ -11,11 +11,11 @@ use App\Entity\Comment;
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
-    {   
+    {
         $faker = \Faker\Factory::create('fr_FR');
 
         // Création de catégories fake
-        for($i = 1; $i <= 3; $i++){
+        for ($i = 1; $i <= 3; $i++) {
             $category = new Category();
             $category->setDescription($faker->paragraph());
         
@@ -24,35 +24,31 @@ class AppFixtures extends Fixture
             // Création de faux Post
         
 
-        for($j = 1 ; $j <= 7;$j++){
+            for ($j = 1 ; $j <= 7;$j++) {
+                $post = new Post();
 
-            $post = new Post();
-
-            $content = '<p>' . join($faker->paragraphs(5), '</p></p>') . '</p>';
+                $content = '<p>' . join($faker->paragraphs(5), '</p></p>') . '</p>';
             
 
-            $post->setContent($content)
+                $post->setContent($content)
                 ->setCreatedAt($faker->dateTimeBetween('-3 months'))
                 ->setCategory($category);
 
-            $manager->persist($post);
+                $manager->persist($post);
 
-            // Ajout de commentaires
+                // Ajout de commentaires
 
-            for($k = 1; $k <= mt_rand(4,10); $k++ ){
-                $comment = new Comment();
-                $content = '<p>' . join($faker->paragraphs(1), '</p></p>') . '</p>';
-                $comment->setAuthor($faker->name)
+                for ($k = 1; $k <= mt_rand(4, 10); $k++) {
+                    $comment = new Comment();
+                    $content = '<p>' . join($faker->paragraphs(1), '</p></p>') . '</p>';
+                    $comment->setAuthor($faker->name)
                         ->setContent($content)
                         ->setCreatedAt($faker->dateTimeBetween('-1 months'))
                         ->setPost($post);
                         
-                $manager->persist($comment);
+                    $manager->persist($comment);
+                }
             }
-
-        }       
-
-        
         }
         $manager->flush();
     }

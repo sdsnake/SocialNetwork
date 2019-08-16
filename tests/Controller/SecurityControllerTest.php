@@ -7,10 +7,6 @@ use Symfony\Component\HTTPFoundation\Response;
 
 class SecurityControllerTest extends WebTestCase
 {
-
-
-
-
     public function testHomepage()
     {
         $client = static::createClient();
@@ -26,6 +22,4 @@ class SecurityControllerTest extends WebTestCase
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
-
-
 }

@@ -25,7 +25,7 @@
             font-family: 'Righteous', cursive;
         }
 
-        .comment{
+        .badge-light{
             font-family: 'Fredoka One', cursive;
         }
 
@@ -79,7 +79,7 @@
                 {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('admin') }}">Paramètres</a>
+                        <a class="nav-link" href="{{ path('admin') }}">Gestion des Utilisateurs</a>
                     </li>
 
                 {% endif %}
@@ -103,20 +103,24 @@
         event.preventDefault();
         fetch(this.href)
         .then(data=>{return data.json()})
-        .then(res=>{             
+        .then(res=>{
             const likes = res.likes;
+
             this.querySelector('span.js-likes').textContent = likes;
             const icone = this.querySelector('i');
-            if(!'0'== likes){
+            if(icone.classList.contains('fas')){
                 icone.classList.replace('fas', 'far');
+                this.querySelector('span.js-label').textContent = 'J\'aime'
             }else{
-                icone.classList.replace('far', 'fas');               
+                icone.classList.replace('far', 'fas');
+                this.querySelector('span.js-label').textContent = 'Je n\'aime plus'
             }
             
         
         })
         .catch(error=>console.log(error))
     }
+
 
         document.querySelectorAll('.btn-link').forEach(function (link) {
            
@@ -130,6 +134,12 @@
             trimValue: true
         }
     );
+
+
+    $(document).on('change', '#post_img', function () {
+        let fileName = $(this).val().replace(/\\/g, '/').replace(/.*\//, '');
+        $(this).parent('.custom-file').find('.custom-file-label').text(fileName);
+    });
 
     </script>
 {% endblock %}
