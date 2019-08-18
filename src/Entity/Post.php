@@ -67,7 +67,8 @@ class Post
     private $tags;
 
     public function __construct()
-    {
+    {   
+        $this->imgFilename = "nothing.png";
         $this->createdAt = new \DateTime();
         $this->comments = new ArrayCollection();
         $this->loves = new ArrayCollection();
@@ -179,35 +180,6 @@ class Post
     public function getLoves(): Collection
     {
         return $this->loves;
-    }
-
-    public function addLove(User $love): self
-    {
-        if (!$this->loves->contains($love)) {
-            $this->loves[] = $love;
-        }
-
-        return $this;
-    }
-
-    public function removeLove(User $love): self
-    {
-        if ($this->loves->contains($love)) {
-            $this->loves->removeElement($love);
-        }
-
-        return $this;
-    }
-
-    public function loved(User $love): bool
-    {
-        foreach ($this->loves as $love) {
-            if ($this->getUser() === $love) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

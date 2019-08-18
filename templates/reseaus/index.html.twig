@@ -12,43 +12,48 @@
                                 class="fas fa-user-tie user"></i> {{ post.user.alias }}</h3></a>
             </div>
             <div class="card-body">
-                {%  for tag in post.tags %}
+                {% for tag in post.tags %}
                     <p class="badge badge-primary ">#{{ tag }}</p>
                 {% endfor %}
                 <span class="small text-muted">
                     le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}
                 </span><br>
+                {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('like', {'id' : post.id} ) }}" class="btn btn-link">
 
-                <a href="{{ path('like', {'id' : post.id} )}}" class="btn btn-link">
+                    <span class="js-likes">{{ post.loves | length }}</span>
 
-                    <span class="js-likes">{{ post.loves | length}}</span>
-
-                    {%  if post.user in post.loves %}
+                    {% if app.user in post.loves %}
                         <i class="fas fa-heart fa-2x text-danger"></i>
-                    <span class = "js-label">Je n'aime plus</span>
+                        <span class="js-label">Je n'aime plus</span>
                     {% else %}
                         <i class="far fa-heart fa-2x text-danger"></i>
-                    <span class = "js-label">J'aime</span>
-                        {% endif %}
+                        <span class="js-label">J'aime</span>
+                    {% endif %}
+
 
                 </a>
-
+                {% else %}
+                    <span class="js-likes">{{ post.loves | length }}</span>
+                    <i class="fas fa-heart fa-2x text-danger"></i>
+                    <span class="js-label">J'aime</span>
+                {% endif %}
 
                 <p class="card-text">
                     {{ post.content | raw }}
                 </p>
                 {% if is_granted('ROLE_USER') %}
-                <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id }) }}"><i
-                            class="far fa-comments fa-2x"></i></a>
+                    <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id }) }}"><i
+                                class="far fa-comments fa-2x"></i></a>
                 {% else %}
-                    <div class="badge badge-info mb-4">Connectez pour participer à la discussion </div></br>
+                    <div class="badge badge-info mb-4">Connectez pour participer à la discussion</div></br>
                     <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id, 'usId': post.user.id }) }}"><i
                                 class="far fa-comments fa-2x"></i></a>
                 {% endif %}
             </div>
             {% if is_granted('edit',post) %}
                 <a class="btn text-primary text-right" href="{{ path('edit_post', {'id': post.id }) }}">Modifier</a>
-                {%  include "reseaus/delete_form.html.twig" %}
+                {% include "reseaus/delete_form.html.twig" %}
 
             {% endif %}
         </div>

@@ -1,17 +1,17 @@
-{% extends 'base.html.twig '%}
+{% extends 'base.html.twig ' %}
 
 {% block body %}
-<div class="createModi">
-<h2>Création d'une post</h2>
+    <div class="createModi">
+        <h2>Création d'une post</h2>
         <div class="container">
-{{ form_start(formPost) }}
+            {{ form_start(formPost) }}
 
-        {% include "reseaus/form.html.twig" %}
+            {% include "reseaus/form.html.twig" %}
 
-        <button type="submit" value="Ajouter" class="btn btn-success">Ajouter</button>
-    
-{{ form_end(formPost)}}
+            <button type="submit" value="Ajouter" class="btn btn-success">Ajouter</button>
+
+            {{ form_end(formPost) }}
         </div>
-</div>
+    </div>
 {% endblock %}
 

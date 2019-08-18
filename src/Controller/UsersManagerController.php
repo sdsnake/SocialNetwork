@@ -23,8 +23,7 @@ class UsersManagerController extends AbstractController
     public function index(UserRepository $repo, Request $request)
     {
         $users = $repo->findAll();
-
-
+        
         return $this->render('reseaus/admin.html.twig', [
             'controller_name' => 'ReseausController',
             'users' => $users,

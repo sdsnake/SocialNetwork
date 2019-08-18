@@ -20,8 +20,9 @@ class PostController extends AbstractController
      */
     public function editPost(Post $post, Request $request, FileUploader $fileUploader)
     {
-        $form = $this->createForm(PostType::class, $post)->handleRequest($request);
         $this->denyAccessUnlessGranted('edit', $post);
+
+        $form = $this->createForm(PostType::class, $post)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imgFile = $form['img']->getData();
@@ -39,7 +40,6 @@ class PostController extends AbstractController
             'formPost' => $form->createView(),
         ]);
     }
-
 
     /**
      * @Route("/new", name="reseaus_create")
@@ -59,8 +59,6 @@ class PostController extends AbstractController
 
             if ($imgFile) {
                 $post->setImgFilename($fileUploader->upload($imgFile));
-            } else {
-                $post->setImgFilename('nothing.png');
             }
 
             $this->getDoctrine()->getManager()->persist($post);
@@ -78,7 +76,6 @@ class PostController extends AbstractController
     /**
      * @Route("/post/{id}", name="post_show", requirements={"id":"\d+"})
      */
-
     public function show(Post $post, Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -130,11 +127,10 @@ class PostController extends AbstractController
     /**
      * @Route("/like/{id}", name="like")
      */
-
     public function like(Post $post)
     {
         if ($post->getLoves()->contains($this->getUser())) {
-            $this->getDoctrine()->getManager()->persist($post->removeLove($this->getUser()));
+            $post->getLoves()->removeElement($this->getUser());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->json(
@@ -146,8 +142,9 @@ class PostController extends AbstractController
                 ],
                 200
             );
-        } else {
-            $this->getDoctrine()->getManager()->persist($post->addLove($this->getUser()));
+        }
+
+            $post->getLoves()->add($this->getUser());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->json(
@@ -158,9 +155,5 @@ class PostController extends AbstractController
                 ],
                 200
             );
-        }
-
-
-        //return $this->redirectToRoute('reseaus');
     }
 }
