@@ -40,3 +40,22 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type }
+    post_listener:
+        class: App\EntityListener\PostListener
+        tags:
+            -
+                name: doctrine.orm.entity_listener
+                event: prePersist
+                entity: App\Entity\Post
+    comment_listener:
+        class: App\EntityListener\CommentListener
+        tags:
+            - name: doctrine.orm.entity_listener
+              event: prePersist
+              entity: App\Entity\Comment
+    user_listener:
+        class: App\EntityListener\UserListener
+        tags:
+            - name: doctrine.orm.entity_listener
+              event: prePersist
+              entity: App\Entity\User
