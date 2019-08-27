@@ -8,17 +8,31 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploader
 {
+    /**
+     * @var
+     */
     private $targetDirectory;
 
+    /**
+     * FileUploader constructor.
+     * @param $targetDirectory
+     */
     public function __construct($targetDirectory)
     {
         $this->targetDirectory = $targetDirectory;
     }
 
+    /**
+     * @param UploadedFile $file
+     * @return string
+     */
     public function upload(UploadedFile $file)
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+        $safeFilename = transliterator_transliterate(
+            'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
+            $originalFilename
+        );
         $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
 
         try {
@@ -30,6 +44,9 @@ class FileUploader
         return $fileName;
     }
 
+    /**
+     * @return mixed
+     */
     public function getTargetDirectory()
     {
         return $this->targetDirectory;

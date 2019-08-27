@@ -15,34 +15,46 @@ class Comment
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * * @Assert\Unique()
+     * @Assert\Unique()
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * * @Assert\NotBlank()
+     * @Assert\NotBlank()
+     *
+     * @var string
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime")
-     * * @Assert\DateTime()
+     * @Assert\DateTime()
      */
     private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Post|null
      */
     private $post;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @var User|null
      */
     private $user;
 
+    /**
+     * Comment constructor.
+     * @throws \Exception
+     */
     public function __construct()
     {
         $this->createdAt = new \DateTime();

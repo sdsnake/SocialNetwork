@@ -2,21 +2,26 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Entity\Post;
-use App\Form\PostType;
 use App\Repository\PostRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
+/**
+ * Class HomeController
+ * @package App\Controller
+ */
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/reseaus", name="reseaus")
+     * * @Route("/reseaus", name="reseaus")
+     *
+     * @param PostRepository $repo
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
      */
     public function index(PostRepository $repo, Request $request, PaginatorInterface $paginator)
     {
@@ -34,7 +39,9 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/", name="home")
+     * * @Route("/", name="home")
+     *
+     * @return Response
      */
     public function home()
     {

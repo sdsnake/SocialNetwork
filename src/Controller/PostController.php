@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,12 +14,22 @@ use App\Form\PostType;
 use App\Entity\User;
 use App\Service\FileUploader;
 
+/**
+ * Class PostController
+ * @package App\Controller
+ * @Route("/post")
+ */
 class PostController extends AbstractController
 {
     /**
-     * @Route("/{id}/edit", name="edit_post", requirements={"id":"\d+"})
+     *  @Route("/{id}/edit", name="post_edit", requirements={"id":"\d+"})
+     *
+     * @param Post $post
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function editPost(Post $post, Request $request, FileUploader $fileUploader)
+    public function edit(Post $post, Request $request, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('edit', $post);
 
@@ -42,15 +53,17 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="reseaus_create")
+     * * @Route("/create", name="post_create")
+     *
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function create(Request $request, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $post = new Post();
-        /** @var \App\entity\User $user */
-        $post->setUser($this->getUser());
 
         $form = $this->createForm(PostType::class, $post)->handleRequest($request);
 
@@ -74,14 +87,16 @@ class PostController extends AbstractController
 
 
     /**
-     * @Route("/post/{id}", name="post_show", requirements={"id":"\d+"})
+     * @Route("/{id}/show/", name="post_show", requirements={"id":"\d+"})
+     *
+     * @param Post $post
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function show(Post $post, Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $comment = new Comment();
-        /** @var @ \App\entity\User $user */
-        $comment->setUser($this->getUser());
         $comment->setPost($post);
 
         $form = $this->createForm(CommentType::class, $comment)->handleRequest($request);
@@ -101,12 +116,16 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/del", name="post_delete")
+     * @Route("/{id}/delete", name="post_delete")
+     *
+     * @param Request $request
+     * @param Post $post
+     * @return Response
      */
     public function delete(Request $request, Post $post): Response
     {
         $this->denyAccessUnlessGranted('delete', $post);
-        if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete-item', $request->request->get('_token'))) {
             $this->getDoctrine()->getManager()->remove($post);
             $this->getDoctrine()->getManager()->flush();
         }
@@ -115,9 +134,12 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/user", name="show_user")
+     * * @Route("/{id}/user", name="show_user")
+     *
+     * @param User $user
+     * @return Response
      */
-    public function index(User $user)
+    public function showUser(User $user)
     {
         return $this->render('reseaus/user.html.twig', [
             'posts' => $user->getposts()
@@ -125,9 +147,12 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/like/{id}", name="like")
+     * @Route("/like/{id}", name="post_like")
+     *
+     * @param Post $post
+     * @return JsonResponse
      */
-    public function like(Post $post)
+    public function like(Post $post): JsonResponse
     {
         if ($post->getLoves()->contains($this->getUser())) {
             $post->getLoves()->removeElement($this->getUser());
@@ -144,16 +169,16 @@ class PostController extends AbstractController
             );
         }
 
-            $post->getLoves()->add($this->getUser());
-            $this->getDoctrine()->getManager()->flush();
+        $post->getLoves()->add($this->getUser());
+        $this->getDoctrine()->getManager()->flush();
 
-            return $this->json(
-                [
-                    'code' => 200,
-                    'likes' => count($post->getLoves()),
-                    'loved' => true,
-                ],
-                200
-            );
+        return $this->json(
+            [
+                'code' => 200,
+                'likes' => count($post->getLoves()),
+                'loved' => true,
+            ],
+            200
+        );
     }
 }

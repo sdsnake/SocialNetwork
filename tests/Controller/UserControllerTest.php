@@ -5,21 +5,21 @@ namespace Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HTTPFoundation\Response;
 
-class UsersManagerControllerTest extends WebTestCase
+class UserControllerTest extends WebTestCase
 {
     public function testShowUsers()
     {
         $client = static::createClient();
         $client->request('GET', '/admin');
 
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
     }
 
-    public function testShowAllPosts()
+    public function testSuspend()
     {
         $client = static::createClient();
-        $client->request('GET', '/reseaus');
+        $client->request('GET', '/20/switch');
 
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(301, $client->getResponse()->getStatusCode());
     }
 }

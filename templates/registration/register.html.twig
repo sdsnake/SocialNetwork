@@ -1,17 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Enregistrement{% endblock %}
 
 {% block body %}
+
     <h1>Register</h1>
     <div class="mt-5 col-sm-9 col-md-7 col-lg-5 mx-auto">
-    {{ form_start(registrationForm) }}
+        {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.alias) }}
         {{ form_row(registrationForm.plainPassword.first) }}
         {{ form_row(registrationForm.plainPassword.second) }}
 
         <button class="btn bg-success text-white m-2">Valider l'enregistrement</button>
-    {{ form_end(registrationForm) }}
+        {{ form_end(registrationForm) }}
         <p>Le mot de passe doit contenir au moins 6 caractères et un chiffre</p>
     </div>
 

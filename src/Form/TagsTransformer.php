@@ -7,15 +7,30 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * Class TagsTransformer
+ * @package App\Form
+ */
 class TagsTransformer implements DataTransformerInterface
 {
+    /**
+     * @var ObjectManager
+     */
     private $manager;
 
+    /**
+     * TagsTransformer constructor.
+     * @param ObjectManager $manager
+     */
     public function __construct(ObjectManager $manager)
     {
         $this->manager = $manager;
     }
 
+    /**
+     * @param mixed $tags
+     * @return mixed|string
+     */
     public function transform($tags)
     {
         return implode(",", $tags->map(function ($tag) {
@@ -23,6 +38,10 @@ class TagsTransformer implements DataTransformerInterface
         })->toArray());
     }
 
+    /**
+     * @param mixed $tags
+     * @return ArrayCollection|mixed
+     */
     public function reverseTransform($tags)
     {
         $tagCollection = new ArrayCollection();

@@ -7,18 +7,10 @@ use Symfony\Component\HTTPFoundation\Response;
 
 class RegistrationControllerTest extends WebTestCase
 {
-    public function testHomepage()
+    public function testRegister()
     {
         $client = static::createClient();
-        $client->request('GET', '/');
-
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
-    }
-
-    public function testShowAllPosts()
-    {
-        $client = static::createClient();
-        $client->request('GET', '/reseaus');
+        $client->request('GET', '/register');
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
     }

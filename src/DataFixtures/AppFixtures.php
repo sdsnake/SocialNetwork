@@ -8,8 +8,15 @@ use App\Entity\Post;
 use App\Entity\Category;
 use App\Entity\Comment;
 
+/**
+ * Class AppFixtures
+ * @package App\DataFixtures
+ */
 class AppFixtures extends Fixture
 {
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $faker = \Faker\Factory::create('fr_FR');
@@ -24,7 +31,7 @@ class AppFixtures extends Fixture
             // Création de faux Post
         
 
-            for ($j = 1 ; $j <= 7;$j++) {
+            for ($j = 1; $j <= 7; $j++) {
                 $post = new Post();
 
                 $content = '<p>' . join($faker->paragraphs(5), '</p></p>') . '</p>';

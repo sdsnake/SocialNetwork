@@ -2,15 +2,8 @@
 
 namespace App\Form;
 
-use App\Form\TagsTransformer;
 use App\Entity\Post;
 use App\Entity\Category;
-use App\Entity\Tag;
-use Doctrine\DBAL\Types\ArrayType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,16 +13,30 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Class PostType
+ * @package App\Form
+ */
 class PostType extends AbstractType
 {
+    /**
+     * @var ObjectManager
+     */
     private $manager;
 
+    /**
+     * PostType constructor.
+     * @param ObjectManager $manager
+     */
     public function __construct(ObjectManager $manager)
     {
         $this->manager = $manager;
     }
 
-
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -48,15 +55,14 @@ class PostType extends AbstractType
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
                 'required' => false,
-            ]);
-
-        $builder->add(
-            'tags',
-            TextType::class,
-            [
+            ])
+            ->add(
+                'tags',
+                TextType::class,
+                [
                 'attr' => ['class' => 'dynchoice'],
-            ]
-        );
+                ]
+            );
 
 
         // Data Transformer
@@ -65,6 +71,9 @@ class PostType extends AbstractType
             ->addModelTransformer(new TagsTransformer($this->manager));
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

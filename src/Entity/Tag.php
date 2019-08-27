@@ -15,19 +15,28 @@ class Tag
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Post", inversedBy="tags")
+     *
+     * @var Post|null
      */
     private $posts;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string
      */
     private $name;
 
+    /**
+     * Tag constructor.
+     */
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -51,7 +60,6 @@ class Tag
         if (!$this->posts->contains($tag)) {
             $this->posts[] = $tag;
         }
-
         return $this;
     }
 
@@ -60,7 +68,6 @@ class Tag
         if ($this->posts->contains($tag)) {
             $this->posts->removeElement($tag);
         }
-
         return $this;
     }
 

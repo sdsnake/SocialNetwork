@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}show!{% endblock %}
 
 {% block body %}
-    <article id="showPost">
+
+    <article class="showPost">
         <div class="news card">
             <img class="card-img-top" src="{{ '/files/' ~ post.imgFileName }}" alt="Card image cap">
             <div class="container text-center">
@@ -11,9 +13,9 @@
                 <span class="small text-muted">le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}
                     cercle <strong class="badge badge-pill badge-primary">{{ post.category.title }}</strong></span>
             </h2>
-            {%  for tag in post.tags %}
+            {% for tag in post.tags %}
                 <p class="badge badge-primary w-25">#{{ tag }}</p><br>
-                {% endfor %}
+            {% endfor %}
             <p class="card-text">
                 {{ post.content | raw }}
             </p>
@@ -35,7 +37,7 @@
             <div class="comment col-sm-10 col-md-5 border rounded p-3 col-sm-10">
                 <div class="row">
                     <div class="col-3">
-                        <span class="badge-light text-black" ><i class="fas fa-user-secret"></i> {{ comment.user.alias }}</span>
+                        <span class="badge-light text-black"><i class="fas fa-user-secret"></i> {{ comment.user.alias }}</span>
                         <small class="small text-muted">{{ comment.createdAt | date('d/m/Y à H:i') }}</small>
 
                     </div>
@@ -49,4 +51,5 @@
 
 
     </section>
+
 {% endblock %}

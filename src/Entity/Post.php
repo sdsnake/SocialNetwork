@@ -16,58 +16,78 @@ class Post
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
 
     /**
      * @ORM\Column(type="text")
-     * * @Assert\Length(min=10, minMessage="Contenu trop court")
+     * @Assert\Length(min=10, minMessage="Contenu trop court")
+     *
+     * @var string
      */
     private $content;
 
 
     /**
      * @ORM\Column(type="datetime")
-     * * @Assert\DateTime
+     * @Assert\DateTime
      */
     private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="post")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Category|null
      */
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", orphanRemoval=true)
+     *
+     * @var Comment|null
      */
     private $comments;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @var User|null
      */
     private $user;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      *
+     *
+     * @var string
      */
     private $imgFilename;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="loves")
+     *
+     * @var User|null
      */
     private $loves;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag", mappedBy="posts", cascade={"persist"})
+     *
+     * @var Tag|null
      */
     private $tags;
 
+    /**
+     * Post constructor.
+     * @throws \Exception
+     */
     public function __construct()
-    {   
+    {
         $this->imgFilename = "nothing.png";
         $this->createdAt = new \DateTime();
         $this->comments = new ArrayCollection();
@@ -126,29 +146,6 @@ class Post
         return $this->comments;
     }
 
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setPost($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->contains($comment)) {
-            $this->comments->removeElement($comment);
-            // set the owning side to null (unless already changed)
-            if ($comment->getPost() === $this) {
-                $comment->setPost(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getUser()
     {
         return $this->user;
@@ -194,9 +191,7 @@ class Post
     {
         if (!$this->tags->contains($tag)) {
             $this->tags[] = $tag;
-            $tag->addTag($this);
         }
-
         return $this;
     }
 
@@ -204,9 +199,7 @@ class Post
     {
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
-            $tag->removeTag($this);
         }
-
         return $this;
     }
 }

@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReseausController!{% endblock %}
+{% block title %}Cercle actu{% endblock %}
 
 {% block body %}
 
     {% for post in posts %}
-        <div class="news card mb-4 col-lg-7 col-sm-12" id="showPost">
+        <div class="news card mb-4 col-lg-7 col-sm-12 showPost">
             <img class="card-img-top" src="{{ '/files/' ~ post.imgFileName }}" alt="Card image cap">
             <div class="text-center card-header">
                 <a href="{{ path('show_user', {'id': post.user.id }) }}"><h3 class="user text-primary"><i
@@ -19,20 +19,20 @@
                     le {{ post.createdAt | date('d/m/Y') }} à {{ post.createdAt | date('H:i') }}
                 </span><br>
                 {% if is_granted('ROLE_USER') %}
-                <a href="{{ path('like', {'id' : post.id} ) }}" class="btn btn-link">
+                    <a href="{{ path('post_like', {'id' : post.id} ) }}" class="btn btn-link">
 
-                    <span class="js-likes">{{ post.loves | length }}</span>
+                        <span class="js-likes">{{ post.loves | length }}</span>
 
-                    {% if app.user in post.loves %}
-                        <i class="fas fa-heart fa-2x text-danger"></i>
-                        <span class="js-label">Je n'aime plus</span>
-                    {% else %}
-                        <i class="far fa-heart fa-2x text-danger"></i>
-                        <span class="js-label">J'aime</span>
-                    {% endif %}
+                        {% if app.user in post.loves %}
+                            <i class="fas fa-heart fa-2x text-danger"></i>
+                            <span class="js-label">Je n'aime plus</span>
+                        {% else %}
+                            <i class="far fa-heart fa-2x text-danger"></i>
+                            <span class="js-label">J'aime</span>
+                        {% endif %}
 
 
-                </a>
+                    </a>
                 {% else %}
                     <span class="js-likes">{{ post.loves | length }}</span>
                     <i class="fas fa-heart fa-2x text-danger"></i>
@@ -52,7 +52,7 @@
                 {% endif %}
             </div>
             {% if is_granted('edit',post) %}
-                <a class="btn text-primary text-right" href="{{ path('edit_post', {'id': post.id }) }}">Modifier</a>
+                <a class="btn text-primary text-right" href="{{ path('post_edit', {'id': post.id }) }}">Modifier</a>
                 {% include "reseaus/delete_form.html.twig" %}
 
             {% endif %}

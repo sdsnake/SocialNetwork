@@ -8,6 +8,10 @@ use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
+/**
+ * Class PostVoter
+ * @package App\Security\Voter
+ */
 class PostVoter extends Voter
 {
     // these strings are just invented: you can use anything
@@ -15,6 +19,11 @@ class PostVoter extends Voter
     const EDIT = 'edit';
     const DELETE = 'delete';
 
+    /**
+     * @param string $attribute
+     * @param mixed $subject
+     * @return bool
+     */
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
@@ -30,6 +39,12 @@ class PostVoter extends Voter
         return true;
     }
 
+    /**
+     * @param string $attribute
+     * @param mixed $subject
+     * @param TokenInterface $token
+     * @return bool|void
+     */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         $user = $token->getUser();
@@ -55,11 +70,20 @@ class PostVoter extends Voter
         throw new \LogicException('This code should not be reached!');
     }
 
+    /**
+     * @param Post $post
+     * @param User $user
+     */
     private function canView(Post $post, User $user)
     {
         $this->canEdit($post, $user);
     }
 
+    /**
+     * @param Post $post
+     * @param User $user
+     * @return bool
+     */
     private function canEdit(Post $post, User $user)
     {
         // this assumes that the data object has a getOwner() method
@@ -67,6 +91,11 @@ class PostVoter extends Voter
         return $user === $post->getUser();
     }
 
+    /**
+     * @param Post $post
+     * @param User $user
+     * @return bool
+     */
     private function canDelete(Post $post, User $user)
     {
         // if they can edit, they can view

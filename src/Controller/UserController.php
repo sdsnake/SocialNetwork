@@ -9,21 +9,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Entity\Post;
-use App\Form\PostType;
-use App\Repository\PostRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 
-class UsersManagerController extends AbstractController
+class UserController extends AbstractController
 {
     /**
      * @Route("/admin", name="admin")
+     *
+     * @param UserRepository $repo
+     * @param Request $request
+     * @return Response
      */
     public function index(UserRepository $repo, Request $request)
     {
         $users = $repo->findAll();
-        
+
         return $this->render('reseaus/admin.html.twig', [
             'controller_name' => 'ReseausController',
             'users' => $users,
@@ -32,9 +31,12 @@ class UsersManagerController extends AbstractController
     }
 
     /**
-     * @Route("/switch/{id}", name="restraint")
+     * @Route("/{id}/switch/", name="suspend")
+     *
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function restraint(User $user)
+    public function suspend(User $user)
     {
         if ($user->getActive() == true) {
             $user->setActive(false);

@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReseausController!{% endblock %}
+{% block title %}les posts!{% endblock %}
 
 {% block body %}
 
     {% for post in posts %}
+
         <div class="news card">
             <img class="card-img-top" src="{{ post.imgFilename }}" alt="Card image cap">
             <div class="container text-center">
@@ -19,6 +20,7 @@
             </p>
             <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id}) }}">Lire la suite...</a>
         </div>
+
     {% endfor %}
 
 

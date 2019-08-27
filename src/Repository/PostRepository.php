@@ -14,33 +14,20 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class PostRepository extends ServiceEntityRepository
 {
+    /**
+     * PostRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Post::class);
     }
 
-
-
-
     // /**
     //  * @return Post[] Returns an array of Post objects
     //  */
-
     public function findByAll()
     {
         return $this->findBy([], ['createdAt'=>'DESC']);
     }
-
-
-    /*
-    public function findOneBySomeField($value): ?Post
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -7,19 +7,19 @@ use Symfony\Component\HTTPFoundation\Response;
 
 class SecurityControllerTest extends WebTestCase
 {
-    public function testHomepage()
+    public function testLogin()
     {
         $client = static::createClient();
-        $client->request('GET', '/');
+        $client->request('GET', '/login');
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 
-    public function testShowAllPosts()
+    public function testLogout()
     {
         $client = static::createClient();
-        $client->request('GET', '/reseaus');
+        $client->request('GET', '/logout');
 
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
     }
 }

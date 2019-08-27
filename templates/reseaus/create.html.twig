@@ -1,17 +1,21 @@
 {% extends 'base.html.twig ' %}
 
+{% block title %}Exprime toi!{% endblock %}
+
 {% block body %}
+
     <div class="createModi">
-        <h2>Création d'une post</h2>
+        <h2>Création d'un post</h2>
         <div class="container">
             {{ form_start(formPost) }}
 
             {% include "reseaus/form.html.twig" %}
 
-            <button type="submit" value="Ajouter" class="btn btn-success">Ajouter</button>
+            <button type="submit" class="btn btn-success" id="envoi">Ajouter</button>
 
             {{ form_end(formPost) }}
         </div>
     </div>
+
 {% endblock %}
 

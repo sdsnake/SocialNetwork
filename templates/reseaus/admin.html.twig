@@ -1,32 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReseausController!{% endblock %}
+{% block title %}Gestion de l'utilisateur{% endblock %}
 
 {% block body %}
-    <div class="mt-5">
-        {% for user in users %}
 
-            <div class="card">
-                <div class="card-title"></div>
-                <div class="card-body">
-                    <div class="text-center">{{ user.alias }}</div>
+    <div class="container">
+        <div class="mt-5">
+            {% for user in users %}
 
+
+
+                <div class="card p-3">
+                    <div class="card-title"></div>
+                    <div class="card-body">
+                        <div class="text-center user">{{ user.alias }}</div>
+
+                    </div>
+                    {% if user.active == true %}
+                        <div class="text-center user">
+                            Etat :
+                            <a href="{{ path('suspend', {'id' : user.id} ) }}"
+                               class="text-center badge badge-success switch">actif</a>
+                        </div>
+                    {% else %}
+                        <div class="text-center user">
+                            Etat :
+                            <a href="{{ path('suspend', {'id' : user.id} ) }}"
+                               class="text-center badge badge-danger switch">Inactif</a>
+                        </div>
+                    {% endif %}
                 </div>
-                {% if user.active == true %}
-                    <div class="text-center">
-                    Etat :
-                    <a href="{{ path('restraint', {'id' : user.id} ) }}" class="text-center badge badge-success">actif</a>
-                    </div>
-                {% else %}
-                    <div class="text-center">
-                    Etat :
-                    <a href="{{ path('restraint', {'id' : user.id} ) }}" class="text-center badge badge-danger">Inactif</a>
-                    </div>
-                {% endif %}
-            </div>
 
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-
 
 {% endblock %}

@@ -16,27 +16,38 @@ class Category
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     *  * @Assert\Unique()
+     * @Assert\Unique()
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * * @Assert\NotBlank()
+     * @Assert\NotBlank()
+     *
+     * @var string
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
      */
     private $description;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="category")
-     * * @Assert\NotBlank()
+     * @Assert\NotBlank()
+     *
+     * @var Post|null
      */
     private $post;
 
+    /**
+     * Category constructor.
+     */
     public function __construct()
     {
         $this->post = new ArrayCollection();
@@ -77,28 +88,5 @@ class Category
     public function getPost(): Collection
     {
         return $this->post;
-    }
-
-    public function addPost(Post $post): self
-    {
-        if (!$this->post->contains($post)) {
-            $this->post[] = $post;
-            $post->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removePost(Post $post): self
-    {
-        if ($this->post->contains($post)) {
-            $this->post->removeElement($post);
-            // set the owning side to null (unless already changed)
-            if ($post->getCategory() === $this) {
-                $post->setCategory(null);
-            }
-        }
-
-        return $this;
     }
 }

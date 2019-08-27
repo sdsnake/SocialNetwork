@@ -19,13 +19,17 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * * @Assert\Unique()
+     * @Assert\Unique()
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
+     *
+     * @var string
      */
     private $alias;
 
@@ -37,39 +41,53 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
      */
     private $password;
 
     /**
-     * @var string
+     *
      * @Assert\NotBlank()
      * @Assert\Length(min="4")
      * @Assert\NotCompromisedPassword
+     *
+     * @var string
      */
 
     private $plainPassword;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
+     *
+     *  @var Post|null
      */
     private $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", cascade={"persist", "remove"})
+     *
+     * @var Comment|null
      */
     private $comments;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="loves")
+     *
+     * @var Post|null
      */
     private $loves;
 
     /**
      * @ORM\Column(name="active", type="boolean")
+     *
+     * @var boolean
      */
-
     private $active;
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -187,26 +205,6 @@ class User implements UserInterface
     public function getLoves(): Collection
     {
         return $this->loves;
-    }
-
-    public function addLove(Post $love): self
-    {
-        if (!$this->loves->contains($love)) {
-            $this->loves[] = $love;
-            $love->addLove($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLove(Post $love): self
-    {
-        if ($this->loves->contains($love)) {
-            $this->loves->removeElement($love);
-            $love->removeLove($this);
-        }
-
-        return $this;
     }
 
     public function getActive()

@@ -7,37 +7,33 @@ use Symfony\Component\HTTPFoundation\Response;
 
 class PostControllerTest extends WebTestCase
 {
-    public function testShowPost()
+    public function testShow()
     {
         $client = static::createClient();
-        $client->request('GET', '/post/77');
+        $client->request('GET', '/post/76/show');
 
-        $this->assertSame(302, $client->getResponse()->getStatusCode()); //test de la redirection
+        $this->assertSame(301, $client->getResponse()->getStatusCode()); //test de la redirection
     }
 
-    public function testEditPost()
+    public function testEdit()
     {
         $client = static::createClient();
-        $client->request('GET', '/reseaus');
+        $client->request('GET', 'post/76/edit');
 
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
     }
 
-    public function testCreatePost()
+    public function testCreate()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', 'new');
+        $crawler = $client->request('GET', '/post/create');
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
+    }
 
-
-        $form = $crawler->selectButton('Ajouter')->form();
-        $form['post[category]'] = 'Informatique';
-        $form['post[content]'] = 'Symfony rocks!';
-        $form['post[img]'] = 'http://capside-formation.fr/wp-content/uploads/2014/05/Symfony-boule-150x150.png';
-        $form['post[tags]'] = 'Symfony';
-        $client->submit($form);
-
-        // submit the Form object
-
-        $crawler = $client->followRedirect();
+    public function testDelete()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/post/97/show');
+        $this->assertSame(301, $client->getResponse()->getStatusCode());
     }
 }
