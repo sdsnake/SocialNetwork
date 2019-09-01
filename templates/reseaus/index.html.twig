@@ -46,7 +46,7 @@
                     <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id }) }}"><i
                                 class="far fa-comments fa-2x"></i></a>
                 {% else %}
-                    <div class="badge badge-info mb-4">Connectez pour participer à la discussion</div></br>
+                    <div class="badge badge-info mb-4">Connectez pour participer à la discussion</div><br>
                     <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id, 'usId': post.user.id }) }}"><i
                                 class="far fa-comments fa-2x"></i></a>
                 {% endif %}

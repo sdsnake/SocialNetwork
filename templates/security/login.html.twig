@@ -5,45 +5,49 @@
 {% block body %}
 
 
-    
+
 
     <div class="row rowform">
-  <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-    <div class="card card-signin my-5">
-      <div class="card-body">
-        <h5 class="card-title text-center">Connectez vous</h5>
-          <div class="form-label-group">
-          <form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-            <p>Nom d'utilisateur</p>
-            <input type="text" value="{{ last_username }}" id="inputUsername" class="form-control" placeholder="User name" name="username" required autofocus>
-            <label for="inputUsername"></label>
-          </div>
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Connectez vous</h5>
+                    <div class="form-label-group">
+                        <form method="post">
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+                            <p>Nom d'utilisateur</p>
+                            <input type="text" value="{{ last_username }}" id="inputUsername" class="form-control"
+                                   placeholder="User name" name="username" required autofocus>
+                            <label for="inputUsername"></label>
 
-          <div class="form-label-group">
-          <p>Mot de passe</p>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
-            <label for="inputPassword"></label>
-          </div>
 
-          <div class="custom-control custom-checkbox mb-3">
-            <input type="checkbox" class="custom-control-input" id="customCheck1">
-            <label class="custom-control-label" for="customCheck1">Se rappeler du mot de passe</label>
-          </div>
-          <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-            >
-          <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Connexion</button>
-        
-        </form>
+                            <div class="form-label-group">
+                                <p>Mot de passe</p>
+                                <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+                                       name="password" required>
+                                <label for="inputPassword"></label>
+                            </div>
 
-      </div>
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label" for="customCheck1">Se rappeler du mot de
+                                    passe</label>
+                            </div>
+                            <input type="hidden" name="_csrf_token"
+                                   value="{{ csrf_token('authenticate') }}"
+                            >
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Connexion
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-</div>
 
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
@@ -56,6 +60,6 @@
         </div>
     #}
 
-   
+
 
 {% endblock %}
