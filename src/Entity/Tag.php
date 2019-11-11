@@ -55,7 +55,7 @@ class Tag
         return $this->posts;
     }
 
-    public function addTag(Post $tag): self
+    public function addPost(Post $tag): self
     {
         if (!$this->posts->contains($tag)) {
             $this->posts[] = $tag;
@@ -63,7 +63,7 @@ class Tag
         return $this;
     }
 
-    public function removeTag(Post $tag): self
+    public function removePost(Post $tag): self
     {
         if ($this->posts->contains($tag)) {
             $this->posts->removeElement($tag);

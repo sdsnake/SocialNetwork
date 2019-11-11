@@ -22,15 +22,15 @@ class PostType extends AbstractType
     /**
      * @var ObjectManager
      */
-    private $manager;
+    private $tagsTransformer;
 
     /**
      * PostType constructor.
      * @param ObjectManager $manager
      */
-    public function __construct(ObjectManager $manager)
+    public function __construct(TagsTransformer $tagsTransformer)
     {
-        $this->manager = $manager;
+        $this->tagsTransformer = $tagsTransformer;
     }
 
     /**
@@ -68,7 +68,7 @@ class PostType extends AbstractType
         // Data Transformer
         $builder
             ->get('tags')
-            ->addModelTransformer(new TagsTransformer($this->manager));
+            ->addModelTransformer($this->tagsTransformer);
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\PostsSearch;
+use App\Form\PostsSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +27,10 @@ class HomeController extends AbstractController
      */
     public function index(PostRepository $repo, Request $request, PaginatorInterface $paginator)
     {
+        $search = new PostsSearch();
+        $form = $this->createForm(PostsSearchType::class, $search);
+        $form->handleRequest($request);
+
         $posts = $paginator->paginate(
             $repo->findByAll(),
             $request->query->getInt('page', 1),
@@ -34,6 +40,7 @@ class HomeController extends AbstractController
         return $this->render('reseaus/index.html.twig', [
             'controller_name' => 'ReseausController',
             'posts' => $posts,
+            'form' => $form->createView()
 
         ]);
     }

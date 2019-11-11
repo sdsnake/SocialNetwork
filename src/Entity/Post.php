@@ -191,7 +191,7 @@ class Post
     {
         if (!$this->tags->contains($tag)) {
             $this->tags[] = $tag;
-            $tag->addTag($this);
+            $tag->addPost($this);
         }
         return $this;
     }
@@ -200,7 +200,7 @@ class Post
     {
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
-            $tag->removeTag($this);
+            $tag->removePost($this);
         }
         return $this;
     }

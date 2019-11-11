@@ -3,7 +3,11 @@
 {% block title %}Cercle actu{% endblock %}
 
 {% block body %}
-
+    <div class="jumbotron">
+        <div class="container">
+            {{ form(form) }}
+        </div>
+    </div>
     {% for post in posts %}
         <div class="news card mb-4 col-lg-7 col-sm-12 showPost">
             <img class="card-img-top" src="{{ '/files/' ~ post.imgFileName }}" alt="Card image cap">
