@@ -30,7 +30,6 @@ class PostsSearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => PostsSearch::class,
             'method' => 'get',
             'csrf_protection' => false
         ]);

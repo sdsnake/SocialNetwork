@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\PostsSearch;
+use App\Entity\Tag;
 use App\Form\PostsSearchType;
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,11 +26,20 @@ class HomeController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index(PostRepository $repo, Request $request, PaginatorInterface $paginator)
+    public function index(PostRepository $repo, Request $request, PaginatorInterface $paginator, TagRepository $repoTag)
     {
-        $search = new PostsSearch();
-        $form = $this->createForm(PostsSearchType::class, $search);
-        $form->handleRequest($request);
+
+        $form = $this->createForm(PostsSearchType::class)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $posts = $paginator->paginate(
+                $repoTag->findBySearch($form->getData()),
+                $request->query->getInt('page', 1),
+                5
+            );
+
+            return $this->render('search/result.html.twig', ['posts' => $posts]);
+        }
 
         $posts = $paginator->paginate(
             $repo->findByAll(),
