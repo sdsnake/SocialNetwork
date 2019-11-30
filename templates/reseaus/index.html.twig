@@ -3,13 +3,13 @@
 {% block title %}Cercle actu{% endblock %}
 
 {% block body %}
-    <div class="jumbotron">
+    <div class="search bg-light">
         <div class="container">
             {{ form(form) }}
         </div>
     </div>
     {% for post in posts %}
-        <div class="news card mb-4 col-lg-7 col-sm-12 showPost">
+        <div class="news card col-lg-7 col-sm-12">
             <img class="card-img-top" src="{{ '/files/' ~ post.imgFileName }}" alt="Card image cap">
             <div class="text-center card-header">
                 <a href="{{ path('show_user', {'id': post.user.id }) }}"><h3 class="user text-primary"><i
@@ -50,15 +50,16 @@
                     <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id }) }}"><i
                                 class="far fa-comments fa-2x"></i></a>
                 {% else %}
-                    <div class="badge badge-info mb-4">Connectez pour participer à la discussion</div><br>
+                    <div class="badge badge-info mb-4">Connectez-vous pour participer à la discussion</div><br>
                     <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id, 'usId': post.user.id }) }}"><i
                                 class="far fa-comments fa-2x"></i></a>
                 {% endif %}
             </div>
             {% if is_granted('edit',post) %}
                 <a class="btn text-primary text-right" href="{{ path('post_edit', {'id': post.id }) }}">Modifier</a>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') or is_granted('edit',post) %}
                 {% include "reseaus/delete_form.html.twig" %}
-
             {% endif %}
         </div>
 

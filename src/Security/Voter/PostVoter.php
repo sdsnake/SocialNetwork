@@ -7,6 +7,7 @@ use App\Entity\Post;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class PostVoter
@@ -14,6 +15,11 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 class PostVoter extends Voter
 {
+    private $security;
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
     // these strings are just invented: you can use anything
     const VIEW = 'view';
     const EDIT = 'edit';
@@ -64,7 +70,14 @@ class PostVoter extends Voter
             case self::EDIT:
                 return $this->canEdit($post, $user);
             case self::DELETE:
-                return $this->canDelete($post, $user);
+                // this is the author!
+                if ($this->canDelete($post, $user)) {
+                    return true;
+                }
+                if ($this->security->isGranted('ROLE_ADMIN')) {
+                    return true;
+                }
+                return false;
         }
 
         throw new \LogicException('This code should not be reached!');

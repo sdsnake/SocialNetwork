@@ -31,8 +31,8 @@ class TagRepository extends ServiceEntityRepository
     {
 
         return $this->createQueryBuilder('c')
-                    ->where('c.name = :search')
-                    ->setParameter('search', $search['tag'])
+                    ->where("c.name LIKE :search")
+                    ->setParameter('search','%' . $search['tag']. '%')
                     ->getQuery()
                     ->getResult();
     }
